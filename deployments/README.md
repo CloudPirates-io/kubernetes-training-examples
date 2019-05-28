@@ -72,3 +72,37 @@ Alternatively use a specified revision number
 kubectl rollout undo deployment.v1.apps/nginx-deployment --to-revision=2
 ```
 
+
+### Scaling a Deployment
+
+Scale the deployment to a given replica-count
+
+```
+kubectl scale deployment.v1.apps/nginx-deployment --replicas=5
+```
+
+
+If you enable the horizontal-pod-autoscaler feature, you could autoscale 
+the application based on the given CPU utilization
+
+```
+kubectl autoscale deployment.v1.apps/nginx-deployment --min=1 --max=5 --cpu-percent=80
+```
+
+### Pausing and resuming a Deployment
+
+You can pause a Deployment before triggering one or more updates and 
+then resume it. This will allow you to apply multiple fixes in between 
+pausing and resuming without triggering unnecessary rollouts.
+
+```
+kubectl rollout pause deployment.v1.apps/nginx-deployment
+```
+
+Make your changes. No rollout will be performed
+
+Resume the Deployment
+
+```
+kubectl rollout resume deployment.v1.apps/nginx-deployment
+```

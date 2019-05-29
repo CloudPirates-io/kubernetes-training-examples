@@ -38,7 +38,7 @@ swapoff -a
 vim /etc/fstab -> Remove swap partition
 ```
 
-Reboot for swap: `reboot`
+Maybe reboot to completely disable swap.
 
 
 #### Download and extract required kubernetes binaries
@@ -69,8 +69,7 @@ kubelet --pod-manifest-path /etc/kubernetes/manifests &> /etc/kubernetes/kubelet
 
 Run first manifest file
 ```
-# insert kubelet-test.yaml content
-vim /etc/kubernetes/manifests/kubelet-test.yaml
+curl https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/kubelet-test.yaml > /etc/kubernetes/manifests/kubelet-test.yaml
 ```
 
 Validate with docker ps / docker logs
@@ -93,8 +92,9 @@ etcdctl cluster-health
 
 #### Install API-Server
 
-Start API-Server connected to Etcd
-Disabled ServiceAccount to use api-server without controller-manger and default serviceaccounts created
+Start API-Server connected to Etcd. Disabled ServiceAccount to use 
+api-server without controller-manger and default serviceaccounts 
+created.
 ```
 kube-apiserver --etcd-servers=http://localhost:2379 --service-cluster-ip-range=10.0.0.0/16 --bind-address=0.0.0.0 --insecure-bind-address=0.0.0.0 --disable-admission-plugins=ServiceAccount &> /etc/kubernetes/apiserver.log &
 ```
@@ -109,10 +109,10 @@ echo 'source <(kubectl completion bash)' >>~/.bashrc
 ```
 Don´t forget to reload your terminal session.
 
-Currently no connection: `kubectl cluster-info`
-Empty config: `kubectl config view`
+Currently no connection `kubectl cluster-info` and an
+empty config: `kubectl config view`
 
-Add the cluster and the context
+Add the cluster and the context:
 ```
 # cluster
 kubectl config set-cluster kube-from-scratch --server=http://localhost:8080
@@ -125,7 +125,7 @@ Enable context: `kubectl config use-context kube-from-scratch`
 You can also display the config file: `cat .kube/config`
 
 
-Check connection by getting all resources
+Check connection by getting all resources:
 ```
 kubectl get all --all-namespaces 
 ```
@@ -134,8 +134,8 @@ Kill current kubelet running in standalone mode: `pkill -f kubelet`
 
 ### Registering your kubelet to the api-server
 
-Register Kubelet to api-server
-Attention: Maybe error on start, then simply try again
+Register Kubelet to api-server. Maybe you got some error on first 
+start, then simply try again:
 ```
 kubelet --register-node --kubeconfig=".kube/config" &> /etc/kubernetes/kubelet.log &
 ```
@@ -153,12 +153,15 @@ ls /etc/kubernetes/manifests/
 
 Create a pod over kubectl
 ```
-# insert content from kubectl-test.yaml
-vim kubectl-test.yaml
+# kubectl-test.yaml
+curl https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/kubectl-test.yaml > ~/kubectl-test.yaml
 
 # apply
 kubectl apply -f kubectl-test.yaml
 ```
+
+>Instead of downloading and applying the file, you could simplify to one
+>single command: kubectl apply -f https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/kubectl-test.yaml
 
 Describe pod, no scheduler actions displayed
 ```
@@ -185,8 +188,8 @@ pod is creating now: `kubectl get po`
 Try to create a deployment
 
 ```
-# add content from deployment-test.yaml
-vim deployment-test.yaml
+# deployment-test.yaml
+curl https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/deployment-test.yaml > ~/deployment-test.yaml
 kubectl apply -f deployment-test.yaml
 ```
 
@@ -220,7 +223,7 @@ kubectl get serviceaccounts
 Deploy Service
 ```
 # add service-test.yaml
-vim service-test.yaml
+curl https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/service-test.yaml > ~/service-test.yaml
 # apply
 kubectl apply -f service-test.yaml
 ```

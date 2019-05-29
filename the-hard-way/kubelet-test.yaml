@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-kubelet
+spec:
+  containers:
+    - name: test-kubelet
+      image: alpine
+      command: ["/bin/sh", "-c"]
+      args: ["while true; do echo kubelet-works; sleep 10; done;"]

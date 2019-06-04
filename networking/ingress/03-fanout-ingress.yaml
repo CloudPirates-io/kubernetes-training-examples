@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: fanout-ingress
+  namespace: ingress-example
+spec:
+  backend:
+    serviceName: echoserver
+    servicePort: 8080

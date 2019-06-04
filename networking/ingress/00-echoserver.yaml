@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress-example
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echoserver-deployment
+  namespace: ingress-example
+spec:
+  selector:
+    matchLabels:
+      run: echoserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: echoserver
+    spec:
+      containers:
+        - name: echoserver
+          image: k8s.gcr.io/echoserver:1.10
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echoserver
+  namespace: ingress-example
+  labels:
+    run: echoserver
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    run: echoserver

@@ -4,6 +4,10 @@ metadata:
   name: hello
 spec:
   schedule: "*/1 * * * *"
+  concurrencyPolicy: Allow
+  suspend: false
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:

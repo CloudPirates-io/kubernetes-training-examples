@@ -3,12 +3,19 @@ kind: CronJob
 metadata:
   name: hello
 spec:
+  # Crontab configuration - in thsi case run every minute
   schedule: "*/1 * * * *"
+  # Allow concurrency running of jobs if previous job is not finished
+  # possible values: Allow, Forbid (skip on existing job run), Replace (delete/cancel current job and start new one)
   concurrencyPolicy: Allow
+  # Disable the cronjob if suspend is set to true
   suspend: false
+  # how many succesfull jobs should be kept
   successfulJobsHistoryLimit: 3
+  # how many failed jobs should be kept
   failedJobsHistoryLimit: 1
   jobTemplate:
+    # normal "pod" spec
     spec:
       template:
         spec:

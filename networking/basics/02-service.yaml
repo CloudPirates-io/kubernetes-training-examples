@@ -6,8 +6,12 @@ metadata:
   labels:
     run: my-nginx
 spec:
+  # type of the service (default ClusterIP)
+  type: ClusterIP
+  # ports assigned to this service
   ports:
     - port: 80
       protocol: TCP
+  # selector for the assigned pods
   selector:
     run: my-nginx

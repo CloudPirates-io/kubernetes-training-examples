@@ -5,6 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
+  # 3 running replicas
   replicas: 3
   selector:
     matchLabels:
@@ -15,30 +16,45 @@ spec:
         app: nginx
     spec:
       containers:
+          # name of the container
         - name: nginx
+          # image and tag (dont use :latest in production)
           image: nginx:latest
+          # liveness probe of the container
           livenessProbe:
+            # liveness type and config
             tcpSocket:
               port: 80
             initialDelaySeconds: 5
             periodSeconds: 10
+          # readiness probe of the container
           readinessProbe:
+            # probe type
             httpGet:
               path: /
               port: 80
               scheme: HTTP
+            # wait X seconds before first check
             initialDelaySeconds: 5
+            # check every X seconds
             periodSeconds: 10
+            # mark as failed after 3 failed checks
             failureThreshold: 3
+            # mark as success after X checks
             successThreshold: 1
+            # timeout for the requests (in this case httpRequest on /)
             timeoutSeconds: 1
+          # assigned resources to this container
           resources:
+            # resource request (used for sheduling and resource calculation)
             requests:
               cpu: 100m
               memory: 50Mi
+            # hard limits
             limits:
               cpu: 200m
               memory: 100Mi
+          # container ports
           ports:
             - containerPort: 80
               name: web

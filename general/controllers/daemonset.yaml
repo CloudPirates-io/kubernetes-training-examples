@@ -14,9 +14,12 @@ spec:
       labels:
         name: fluentd-elasticsearch
     spec:
+      # tolerations example, in this case, the pod can be scheduled on a node
+      # with node-role.kubernetes.io/master taint set
       tolerations:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
+      # default "pod" spec
       containers:
         - name: fluentd-elasticsearch
           image: gcr.io/fluentd-elasticsearch/fluentd:v2.5.1
@@ -32,6 +35,9 @@ spec:
             - name: varlibdockercontainers
               mountPath: /var/lib/docker/containers
               readOnly: true
+      # how long should kubernetes after a delete request wait, before a "hard" termination
+      # of the pod (SIGKILL) are executed (default 30 seconds)
+      # @see https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-terminating-with-grace
       terminationGracePeriodSeconds: 30
       volumes:
         - name: varlog

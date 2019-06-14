@@ -11,10 +11,15 @@ spec:
       command: [ "/bin/sh", "-c", "env" ]
       env:
         # Define the environment variable
-        - name: MY_ENV_VARIABLE
+        - name: DEBUG
           valueFrom:
             configMapKeyRef:
               # The ConfigMap containing the value you want to assign to MY_ENV_VARIABLE
               name: test-config
               # Specify the key associated with the value
-              key: config-key
+              key: debug
+        - name: ERROR_REPORTING
+          valueFrom:
+            configMapKeyRef:
+              name: test-config
+              key: error_reporting

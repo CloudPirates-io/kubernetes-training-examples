@@ -1,13 +1,13 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: vhost-ingress
-  namespace: ingress-example
+  name: demo-ingress
+  namespace: rolling-updates
 spec:
   rules:
     - host: 192-168-99-114.nip.io
       http:
         paths:
           - backend:
-              serviceName: echoserver
+              serviceName: demo
               servicePort: 8080

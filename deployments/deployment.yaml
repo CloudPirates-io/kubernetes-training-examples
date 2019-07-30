@@ -6,7 +6,7 @@ metadata:
     app: nginx
 spec:
   # 3 running replicas
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -23,10 +23,12 @@ spec:
           # liveness probe of the container
           livenessProbe:
             # liveness type and config
-            tcpSocket:
+            httpGet:
+              path: /test
               port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 10
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 3
           # readiness probe of the container
           readinessProbe:
             # probe type
@@ -35,9 +37,9 @@ spec:
               port: 80
               scheme: HTTP
             # wait X seconds before first check
-            initialDelaySeconds: 5
+            initialDelaySeconds: 3
             # check every X seconds
-            periodSeconds: 10
+            periodSeconds: 2
             # mark as failed after 3 failed checks
             failureThreshold: 3
             # mark as success after X checks

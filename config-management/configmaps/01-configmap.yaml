@@ -23,3 +23,5 @@ data:
     color.bad=yellow
     allow.textmode=true
     how.nice.to.look=fairlyNice
+  config.php |
+   <?php $test = 'foo';

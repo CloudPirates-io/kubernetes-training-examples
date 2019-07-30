@@ -4,7 +4,7 @@ metadata:
   name: path-ingress
   namespace: ingress-example
   annotations:
-#    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:

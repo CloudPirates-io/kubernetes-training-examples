@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo
+  namespace: rolling-updates
+  labels:
+    app: my-app
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    app: my-app

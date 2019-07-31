@@ -5,9 +5,9 @@ metadata:
   namespace: rolling-updates
 spec:
   rules:
-    - host: 192-168-99-114.nip.io
+    - host: XXX-XXX-XX-XXX.nip.io # insert "minikube ip"
       http:
         paths:
           - backend:
-              serviceName: demo
+              serviceName: demo-app
               servicePort: 8080

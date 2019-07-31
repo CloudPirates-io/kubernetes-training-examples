@@ -1,39 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo
-  namespace: rolling-updates
+  #creationTimestamp: null
   labels:
-    app: my-app
+    run: demo-app
+  name: demo-app
+  namespace: rolling-updates
 spec:
-  replicas: 5
-  strategy:
-    type: RollingUpdate # or Recreate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 25%
+  replicas: 10
   selector:
     matchLabels:
-      app: my-app
+      run: demo-app
+  strategy:
+    type: RollingUpdate # Recreate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
   template:
     metadata:
+      #creationTimestamp: null
       labels:
-        app: my-app
+        run: demo-app
     spec:
       containers:
-        - name: demo
-          image: gcr.io/google-samples/hello-app:1.0
+        - image: gcr.io/google-samples/hello-app:1.0
+          name: demo-app
           ports:
             - containerPort: 8080
               name: web
           readinessProbe:
-            httpGet:
-              port: 8080
-              path: /
             initialDelaySeconds: 10
+            timeoutSeconds: 1
             periodSeconds: 5
-            successThreshold: 1
-          livenessProbe:
             httpGet:
               port: 8080
               path: /
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 5
+            httpGet:
+              port: 8080
+              path: /
+#status: {}

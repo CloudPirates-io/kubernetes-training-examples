@@ -8,6 +8,10 @@ spec:
   containers:
     - name: test-container
       image: k8s.gcr.io/busybox
+      resources:
+        limits:
+          cpu: 100m
+          memory: 100Mi
       command: [ "/bin/sh", "-c", "env" ]
       env:
         # Define the environment variable

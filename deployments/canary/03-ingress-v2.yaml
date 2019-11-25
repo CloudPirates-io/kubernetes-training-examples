@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/canary-by-header-value: "2"
 spec:
   rules:
-    - host: 192-168-99-114.nip.io # insert "minikube ip"
+    - host: xxx-xxx-xxx-xxx.nip.io # insert "minikube ip"
       http:
         paths:
           - backend:

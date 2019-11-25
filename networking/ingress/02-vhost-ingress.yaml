@@ -5,7 +5,8 @@ metadata:
   namespace: ingress-example
 spec:
   rules:
-    - host: 192-168-99-114.nip.io
+      # insert "minikube ip", nip.io dynamically resolves the a-record
+    - host: XXX-XXX-XX-XXX.nip.io
       http:
         paths:
           - backend:

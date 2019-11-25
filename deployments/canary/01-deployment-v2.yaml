@@ -6,7 +6,7 @@ metadata:
   name: demo-app-v2
   namespace: rolling-updates
 spec:
-  replicas: 10
+  replicas: 5
   selector:
     matchLabels:
       run: demo-app-v2

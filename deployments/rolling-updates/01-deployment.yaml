@@ -42,4 +42,3 @@ spec:
             httpGet:
               port: 8080
               path: /
-#status: {}

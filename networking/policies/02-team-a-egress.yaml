@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: team-a-egress
+  namespace: team-a
+spec:
+  # Select the Pods this policy "applies" to
+  podSelector:
+    matchLabels:
+      app: ta
+  policyTypes:
+  # We only define egress rules, so all ingress traffic is not affected and not blocked
+  # Only all "not defined" egress traffic is blocked by this rule
+  - Egress
+  egress:
+  - to:
+      # Allow egress to all pods (Set CIDR to Pod IP Range defined in your CNI plugin)
+    - ipBlock:
+        cidr: 100.96.0.0/11
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: UDP
+      port: 53

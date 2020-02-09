@@ -8,6 +8,10 @@ spec:
   containers:
     - name: test-container
       image: k8s.gcr.io/busybox
+      resources:
+        limits:
+          cpu: 100m
+          memory: 100M
       command: [ "/bin/sh", "-c", "cat /etc/config/game.properties" ]
       volumeMounts:
         - name: config-volume

@@ -1,0 +1,41 @@
+# result
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: result
+  namespace: voting
+  labels:
+    app: result
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      name: result-service
+  selector:
+    app: result
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result
+  namespace: voting
+  labels:
+    app: result
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: result
+  template:
+    metadata:
+      labels:
+        app: result
+    spec:
+      containers:
+        - name: result
+          image: dockersamples/examplevotingapp_result:before
+          ports:
+            - containerPort: 80
+              name: result

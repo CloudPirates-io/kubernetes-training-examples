@@ -16,14 +16,10 @@ spec: # deployment specification
     spec: # pod-specification
       volumes:
         - name: html-data
-          persistentVolumeClaim:
-            claimName: nginx-volume
+          emptyDir: {}
       containers:
         - name: nginx
           image: nginx:latest # do not use latest in production!!!!
-          volumeMounts:
-            - mountPath: /usr/share/nginx/html
-              name: html-data
           resources:
             requests:
               cpu: 100m
@@ -31,17 +27,6 @@ spec: # deployment specification
             limits:
               cpu: 500m
               memory: 250Mi
-          livenessProbe:
-            httpGet:
-              port: 80
-              path: /
-              scheme: HTTP
-            initialDelaySeconds: 5 # after start wait X before
-            # first check
-            periodSeconds: 10 # check every 10 seconds
-            failureThreshold: 3
-            successThreshold: 1
-            timeoutSeconds: 2
           readinessProbe:
             httpGet:
               port: 80

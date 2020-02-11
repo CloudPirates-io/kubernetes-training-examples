@@ -24,7 +24,7 @@ spec:
           livenessProbe:
             # liveness type and config
             httpGet:
-              path: /test
+              path: /
               port: 80
               scheme: HTTP
             initialDelaySeconds: 2

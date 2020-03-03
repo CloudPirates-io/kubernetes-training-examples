@@ -69,7 +69,7 @@ kubelet --pod-manifest-path /etc/kubernetes/manifests &> /etc/kubernetes/kubelet
 
 Run first manifest file
 ```
-curl https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/kubelet-test.yaml > /etc/kubernetes/manifests/kubelet-test.yaml
+curl https://gitlab.hd-cms.io/cloudpirate/examples/raw/master/the-hard-way/kubelet-test.yaml > /etc/kubernetes/manifests/kubelet-test.yaml
 ```
 
 Validate with docker ps / docker logs
@@ -154,14 +154,14 @@ ls /etc/kubernetes/manifests/
 Create a pod over kubectl
 ```
 # kubectl-test.yaml
-curl https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/kubectl-test.yaml > ~/kubectl-test.yaml
+curl https://gitlab.hd-cms.io/cloudpirate/examples/raw/master/the-hard-way/kubectl-test.yaml > ~/kubectl-test.yaml
 
 # apply
 kubectl apply -f kubectl-test.yaml
 ```
 
 >Instead of downloading and applying the file, you could simplify to one
->single command: kubectl apply -f https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/kubectl-test.yaml
+>single command: kubectl apply -f https://gitlab.hd-cms.io/cloudpirate/examples/raw/master/the-hard-way/kubectl-test.yaml
 
 Describe pod, no scheduler actions displayed
 ```
@@ -189,7 +189,7 @@ Try to create a deployment
 
 ```
 # deployment-test.yaml
-curl https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/deployment-test.yaml > ~/deployment-test.yaml
+curl https://gitlab.hd-cms.io/cloudpirate/examples/raw/master/the-hard-way/deployment-test.yaml > ~/deployment-test.yaml
 kubectl apply -f deployment-test.yaml
 ```
 
@@ -223,7 +223,7 @@ kubectl get serviceaccounts
 Deploy Service
 ```
 # add service-test.yaml
-curl https://gitlab.hd-onlinedesign.de/cloudpirate/examples/raw/master/the-hard-way/service-test.yaml > ~/service-test.yaml
+curl https://gitlab.hd-cms.io/cloudpirate/examples/raw/master/the-hard-way/service-test.yaml > ~/service-test.yaml
 # apply
 kubectl apply -f service-test.yaml
 ```

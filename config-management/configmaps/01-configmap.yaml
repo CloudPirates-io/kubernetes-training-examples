@@ -9,6 +9,7 @@ data:
   foo: bar
   error_reporting: "1"
   debug: "true"
+  db_host: test
   # multiline config
   game.properties: |
     enemies=aliens

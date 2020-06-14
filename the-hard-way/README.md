@@ -44,7 +44,7 @@ Maybe reboot to completely disable swap.
 #### Download and extract required kubernetes binaries
 
 Download Files
-`wget https://dl.k8s.io/v1.14.2/kubernetes-server-linux-amd64.tar.gz`
+`wget https://dl.k8s.io/v1.18.3/kubernetes-server-linux-amd64.tar.gz`
 
 Extract Files
 `tar -xzf kubernetes-server-linux-amd64.tar.gz`
@@ -78,16 +78,17 @@ Validate with docker ps / docker logs
 #### Install Etcd
 
 ```
-wget https://github.com/etcd-io/etcd/releases/download/v3.3.13/etcd-v3.3.13-linux-amd64.tar.gz
-tar -xzf etcd-v3.3.13-linux-amd64.tar.gz 
-cd etcd-v3.3.13-linux-amd64
+wget https://github.com/etcd-io/etcd/releases/download/v3.4.9/etcd-v3.4.9-linux-amd64.tar.gz
+tar -xzf etcd-v3.4.9-linux-amd64.tar.gz 
+cd etcd-v3.4.9-linux-amd64
 mv etcd etcdctl /usr/bin/
 ```
 
 Start and Validate Etcd
 ```
 etcd  --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://localhost:2379 &> /etc/kubernetes/etcd.log &
-etcdctl cluster-health
+#etcdctl cluster-health
+etcdctl --endpoints=127.0.0.1:2379 member list
 ```
 
 #### Install API-Server

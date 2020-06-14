@@ -40,7 +40,7 @@ spec:
             initialDelaySeconds: 3
             # check every X seconds
             periodSeconds: 2
-            # mark as failed after 3 failed checks
+            # mark as failed after X failed checks
             failureThreshold: 3
             # mark as success after X checks
             successThreshold: 1

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: config-management
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+  namespace: config-management
+data:
+  key: value
+  foo: bar
+  test: foo
+  hallo: |
+    kjdsfnas
+    sajfnasjlfd
+    sklfnasf
+    askcnasc
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+  namespace: config-management
+stringData:
+  key: value
+  foo: bar
+  test: bar
+#data:
+#  key: dmFsdWU= #value

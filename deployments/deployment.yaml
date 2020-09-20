@@ -5,6 +5,8 @@ metadata:
   labels:
     app: nginx
 spec:
+  strategy:
+    type: Recreate
   # 3 running replicas
   replicas: 1
   selector:
@@ -27,8 +29,10 @@ spec:
               path: /
               port: 80
               scheme: HTTP
-            initialDelaySeconds: 2
-            periodSeconds: 3
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            failureThreshold: 1
+            successThreshold: 1
           # readiness probe of the container
           readinessProbe:
             # probe type

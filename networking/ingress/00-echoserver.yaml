@@ -35,5 +35,9 @@ spec:
   ports:
     - port: 8080
       protocol: TCP
+      name: test
+    - port: 8085
+      protocol: TCP
+      name: web
   selector:
     run: echoserver

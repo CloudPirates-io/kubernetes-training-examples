@@ -1,14 +1,14 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: vhost-ingress
   namespace: ingress-example
 spec:
+  defaultBackend:
+    service:
+      name: echoserver
+      port:
+        number: 8080
   rules:
       # insert "minikube ip", nip.io dynamically resolves the a-record
-    - host: XXX-XXX-XX-XXX.nip.io
-      http:
-        paths:
-          - backend:
-              serviceName: echoserver
-              servicePort: 8080
+    - host: xxx-xxx-xx-x.nip.io

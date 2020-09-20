@@ -20,7 +20,6 @@ metadata:
   name: vote-config
   namespace: voting
 data:
-  # single values
   option-a: Cats
   option-b: Dogs
 ---
@@ -46,11 +45,11 @@ spec:
           image: dockersamples/examplevotingapp_vote:before
           resources:
             requests:
-              cpu: 10m
-              memory: 20Mi
+              cpu: 50m
+              memory: 100Mi
             limits:
-              cpu: 100m
-              memory: 50Mi
+              cpu: 250m
+              memory: 100Mi
           env:
             - name: OPTION_A
               valueFrom:

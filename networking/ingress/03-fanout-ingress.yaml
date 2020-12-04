@@ -4,7 +4,7 @@ metadata:
   name: fanout-ingress
   namespace: ingress-example
 spec:
-  defaultBackend:  
+  defaultBackend:
     service:
       name: echoserver
       port:

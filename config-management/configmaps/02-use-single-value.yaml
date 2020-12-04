@@ -28,7 +28,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: test-config
-              key: error_reporting
+              key: error_reportingaksjdb
         - name: DB_HOST
           valueFrom:
             configMapKeyRef:

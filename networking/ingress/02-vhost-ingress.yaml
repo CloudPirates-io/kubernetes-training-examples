@@ -3,6 +3,9 @@ kind: Ingress
 metadata:
   name: vhost-ingress
   namespace: ingress-example
+  annotations:
+    kubernetes.io/acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
   defaultBackend:
     service:
@@ -10,5 +13,8 @@ spec:
       port:
         number: 8080
   rules:
-      # insert "minikube ip", nip.io dynamically resolves the a-record
-    - host: xxx-xxx-xx-x.nip.io
+    - host: kubernetes.local
+  tls:
+    - hosts:
+      - kubernetes.local
+      secretName: my-tls-key

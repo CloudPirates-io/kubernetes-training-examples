@@ -1,13 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: probe-example
+  namespace: probes
   labels:
     app: nginx
 spec:
+  # Set strategy Recreate to ignore "liveness/readiness" failure checks
   strategy:
     type: Recreate
-  # 3 running replicas
   replicas: 1
   selector:
     matchLabels:
@@ -43,13 +44,13 @@ spec:
             # wait X seconds before first check
             initialDelaySeconds: 3
             # check every X seconds
-            periodSeconds: 10
+            periodSeconds: 2
             # mark as failed after X failed checks
             failureThreshold: 3
             # mark as success after X checks
             successThreshold: 1
             # timeout for the requests (in this case httpRequest on /)
-            timeoutSeconds: 5
+            timeoutSeconds: 1
           # assigned resources to this container
           resources:
             # resource request (used for sheduling and resource calculation)

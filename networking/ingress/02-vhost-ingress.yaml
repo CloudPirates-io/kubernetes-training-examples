@@ -4,17 +4,16 @@ metadata:
   name: vhost-ingress
   namespace: ingress-example
   annotations:
-    kubernetes.io/acme: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
 spec:
-  defaultBackend:
-    service:
-      name: echoserver
-      port:
-        number: 8080
   rules:
-    - host: kubernetes.local
-  tls:
-    - hosts:
-      - kubernetes.local
-      secretName: my-tls-key
+  - host: kubernetes.local
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: echoserver
+            port:
+              number: 8080

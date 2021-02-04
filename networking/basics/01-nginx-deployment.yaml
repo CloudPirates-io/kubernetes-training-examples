@@ -19,28 +19,3 @@ spec:
           ports:
             - containerPort: 80
 
-
-
-
-
-
-
-# Internet -> :80 -> LoadBalancer (Cloud/"händisch") -> (Node IP):30100 -> "Cluster Intern" -> :30100 -> Service -> :80 Pod (NGINX) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

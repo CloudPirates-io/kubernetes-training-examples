@@ -5,6 +5,8 @@ metadata:
     run: demo-app
   name: demo-app
   namespace: rolling-updates
+  annotations:
+    kubernetes.io/revision: Das ist meine Revisions Beschreibung
 spec:
   selector:
     matchLabels:
@@ -12,8 +14,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
+      maxSurge: 2
+      maxUnavailable: 50%
   template:
     metadata:
       labels:
@@ -22,6 +24,8 @@ spec:
       containers:
         - image: gcr.io/google-samples/hello-app:1.0
           name: demo-app
+          resources:
+            limits: {}
           ports:
             - containerPort: 8080
               name: web
@@ -30,7 +34,7 @@ spec:
             timeoutSeconds: 1
             periodSeconds: 5
             httpGet:
-              port: 8080
+              port: 8085
               path: /
           livenessProbe:
             initialDelaySeconds: 10

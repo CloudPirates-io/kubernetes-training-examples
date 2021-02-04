@@ -5,13 +5,12 @@ metadata:
   namespace: config-example
 data:
   # single values
-  config-key: my-config-value
+  configKey: my-config-value
   foo: bar
-  error_reporting: "1"
+  errorReporting: "1"
   debug: "true"
-  db_host: test
   # multiline config
-  game.properties: |
+  gameProperties: |
     enemies=aliens
     lives=3
     enemies.cheat=true
@@ -19,7 +18,7 @@ data:
     secret.code.passphrase=UUDDLRLRBABAS
     secret.code.allowed=true
     secret.code.lives=30
-  ui.properties: |
+  uiProperties: |
     color.good=purple
     color.bad=yellow
     allow.textmode=true

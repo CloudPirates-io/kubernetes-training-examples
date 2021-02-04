@@ -8,7 +8,7 @@ spec:
       name: test-container
       volumeMounts:
         - mountPath: /cache
-          name: cache-volume
+          name: cache
   volumes:
-    - name: cache-volume
+    - name: cache
       emptyDir: {}

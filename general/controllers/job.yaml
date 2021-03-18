@@ -8,6 +8,7 @@ spec:
   backoffLimit: 4
   template:
     spec:
+      restartPolicy: Never
       containers:
         - name: pi
           imagePullPolicy: IfNotPresent

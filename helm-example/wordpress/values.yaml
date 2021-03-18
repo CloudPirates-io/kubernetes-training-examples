@@ -1,0 +1,19 @@
+## User of the application
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressUsername: dhemeier
+
+## Admin email
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressEmail: d.hemeier@cloudpirate.io
+
+## First name
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressFirstName: Dennis
+
+## Last name
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressLastName: Hemeier

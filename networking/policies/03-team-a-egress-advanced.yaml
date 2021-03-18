@@ -4,7 +4,6 @@ metadata:
   name: team-a-egress
   namespace: team-a
 spec:
-  # Select the Pods this policy "applies" to
   podSelector:
     matchLabels:
       app: ta
@@ -13,29 +12,23 @@ spec:
   - Ingress
   egress:
   - to:
-      # Allow egress to namespace with label (NOT THE NAME FIELD) "name=team-b" and
-      # pods labeled by "app=tb"
     - namespaceSelector:
         matchLabels:
           name: team-b
-    -  podSelector:
+      podSelector:
         matchLabels:
           app: tb
     ports:
     - protocol: TCP
       port: 80
   - to:
-      # Allow egress to DNS
     - ipBlock:
         cidr: 100.96.0.0/11
     ports:
-      # Allow DNS to get the service IPs
     - protocol: UDP
       port: 53
   ingress:
   - from:
-      # Allow egress to namespace with label (NOT THE NAME FIELD) "name=team-b" and
-      # pods labeled by "app=tb"
     - namespaceSelector:
         matchLabels:
           name: team-b

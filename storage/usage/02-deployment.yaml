@@ -17,6 +17,7 @@ spec:
       containers:
         - name: nginx
           image: nginx:latest
+          resources: {}
           volumeMounts:
             - mountPath: /usr/share/nginx/html
               name: www-data

@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: vhost-ingress
   namespace: ingress-example
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: 100m
 spec:
   rules:
   - host: kubernetes.local

@@ -106,3 +106,27 @@ Resume the Deployment
 ```
 kubectl rollout resume deployment.v1.apps/nginx-deployment
 ```
+
+
+
+
+
+# Deployment Strategies
+
+
+1) Continous Integration
+2) Continous Delivery
+3) Continous Deployment
+
+Build Prozess -> 
+    "Docker" Image ->
+        "Testen" / End2End Test -> # Continous Integration "erreicht", kann manuell durchgeführt werden
+            "Deployment Prozess" (ArgoCD) -> 
+                
+                # Continous Delivery: Manuelles! Deployment in DEV/Staging/Prod
+                # Continous Deployment: Automatisiertes Deployment in Dev/... 
+
+                Dev-Cluster -> 
+                    Staging Cluster -> 
+                        Production Cluster -> 
+                            Eventuell Rollback  # Continous Deployment: Automatisierter Rollback basierend auf Applikations-Metriken

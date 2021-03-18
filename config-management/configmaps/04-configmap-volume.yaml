@@ -12,7 +12,7 @@ spec:
         limits:
           cpu: 100m
           memory: 100M
-      command: [ "/bin/sh", "-c", "ls -la /etc/config/ && echo 'cat game.properties result: ' && cat /etc/config/game.properties" ]
+      command: [ "/bin/sh", "-c", "ls -la /etc/config/ && echo 'cat gameProperties result: ' && cat /etc/config/gameProperties" ]
       volumeMounts:
         - name: config-volume
           # Caution: If there are some files in the /etc/config/ directory, they will be deleted.
@@ -22,4 +22,4 @@ spec:
       configMap:
         # Provide the name of the ConfigMap containing the files you want
         # to add to the container
-        name: test-config 
+        name: test-config

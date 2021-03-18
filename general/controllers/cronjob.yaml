@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: hello
 spec:
-  # Crontab configuration - in thsi case run every minute
+  # Crontab configuration - in this case run every minute
   schedule: "*/1 * * * *"
   # Allow concurrency running of jobs if previous job is not finished
   # possible values: Allow, Forbid (skip on existing job run), Replace (delete/cancel current job and start new one)
@@ -15,7 +15,7 @@ spec:
   # how many failed jobs should be kept
   failedJobsHistoryLimit: 1
   jobTemplate:
-    # normal "pod" spec
+    # normal "job" spec
     spec:
       template:
         spec:

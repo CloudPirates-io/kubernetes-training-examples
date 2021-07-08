@@ -8,8 +8,8 @@ in any case other than testing and demonstrating k8s.
 
 ### Prerequisites
 We need a single Ubuntu Server with working internet
-connection and a valid hostname. Tested with ubuntu 18.04 and 
-kubernetes 1.14.2
+connection and a valid hostname. Tested with ubuntu 20.04 and 
+kubernetes 1.18.3
 
 
 ### Walktrough

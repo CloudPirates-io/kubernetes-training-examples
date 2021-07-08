@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: code-server
+  namespace: code-server
+  labels:
+    app.kubernetes.io/name: code-server
+    app.kubernetes.io/instance: code-server
+#  annotations:
+#    kubernetes.io/tls-acme: "true"
+spec:
+#  tls:
+#    - hosts:
+#        - a1f2ebbada5884804aa84964ca5d1082-4b4bfbc7409618a7.elb.eu-central-1.amazonaws.com
+#      secretName: code-server
+  rules:
+    - host: a1f2ebbada5884804aa84964ca5d1082-4b4bfbc7409618a7.elb.eu-central-1.amazonaws.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: code-server
+                port:
+                  number: 8080

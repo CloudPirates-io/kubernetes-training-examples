@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server
+  namespace: code-server
+  labels:
+    app.kubernetes.io/name: code-server
+    app.kubernetes.io/instance: code-server
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: code-server
+      app.kubernetes.io/instance: code-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: code-server
+        app.kubernetes.io/instance: code-server
+    spec:
+      imagePullSecrets:
+        - name: learning-registry
+      containers:
+        - name: code-server
+          image: registry.hd-cms.io/cloudpirate/services/code-server
+          imagePullPolicy: Always
+          env:
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: code-server
+                key: password
+          - name: GIT_REPO
+            value: "https://gitlab.hd-cms.io/cloudpirate/schulungen/examples.git Kubernetes,https://gitlab.hd-cms.io/cloudpirate/schulungen/docker-examples.git Docker"
+          volumeMounts:
+          - name: data
+            mountPath: /home/coder/cloudpirates
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          resources:
+            limits:
+              cpu: 2
+              memory: 2000Mi
+            requests:
+              cpu: 500m
+              memory: 1000Mi
+      serviceAccountName: code-server
+      volumes:
+      - name: data
+        emptyDir: {}

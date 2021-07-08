@@ -9,6 +9,11 @@ spec:
       volumeMounts:
         - mountPath: /cache
           name: cache
+    - image: k8s.gcr.io/test-webserver
+      name: sidecar
+      volumeMounts:
+        - mountPath: /tmp/cache
+          name: cache
   volumes:
     - name: cache
       emptyDir: {}

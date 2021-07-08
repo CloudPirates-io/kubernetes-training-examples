@@ -9,6 +9,24 @@ spec:
     - name: application
       image: busybox
       command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
+      resources: 
+        limits: 
+          cpu: 100m
+          memory: 1Gi
+      volumeMounts:
+        - name: tmp
+          mountPath: /tmp
     - name: sidecar
       image: busybox
+      resources: 
+        limits: 
+          cpu: 100m
+          memory: 1Gi
       command: ['sh', '-c', 'echo Sidecar! && sleep 3600']
+      volumeMounts:
+        - name: tmp
+          mountPath: /etc/tmp
+  volumes:
+    - name: tmp
+      hostPath:
+        path: /var/log/containers # /etc/docker.sock, /etc/kern.log, /media/usb0

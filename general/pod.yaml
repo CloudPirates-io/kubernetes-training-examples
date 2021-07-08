@@ -9,3 +9,10 @@ spec:
     - name: myapp-container
       image: busybox
       command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
+      volumeMounts:
+        - mountPath: /root
+          name: root
+  volumes:
+    - name: root
+      hostPath:
+        path: /etc/kubernetes

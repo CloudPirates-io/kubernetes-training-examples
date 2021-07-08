@@ -5,7 +5,14 @@ metadata:
   namespace: rolling-updates
   annotations:
     nginx.ingress.kubernetes.io/canary: "true"
-    nginx.ingress.kubernetes.io/canary-weight: "100"
+    #nginx.ingress.kubernetes.io/canary-by-header: "x-version"
+    #nginx.ingress.kubernetes.io/canary-by-header-value: "2"
+    nginx.ingress.kubernetes.io/canary-weight: "50"
+
+    # Canary percentage
+    # nginx.ingress.kubernetes.io/canary-weight: "100"
+    
+    # OR canary by header and/or header-value
 spec:
   rules:
   - host: "rollingupdates.de"

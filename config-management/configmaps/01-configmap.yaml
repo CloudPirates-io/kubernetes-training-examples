@@ -9,7 +9,11 @@ data:
   foo: bar
   errorReporting: "1"
   debug: "true"
-  # multiline config
+  # multiline config examples
+  config.php: |
+    <?php
+    $foo = 'bar';
+    $test = 'Hallo';
   gameProperties: |
     enemies=aliens
     lives=3

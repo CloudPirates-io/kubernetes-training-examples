@@ -21,6 +21,7 @@ spec:
     ports:
     - protocol: TCP
       port: 80
+      # endPort: 3000
   - to:
     - ipBlock:
         cidr: 100.96.0.0/11

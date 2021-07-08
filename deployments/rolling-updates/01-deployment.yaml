@@ -8,6 +8,8 @@ metadata:
   annotations:
     kubernetes.io/revision: Das ist meine Revisions Beschreibung
 spec:
+  # replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       run: demo-app
@@ -21,6 +23,7 @@ spec:
       labels:
         run: demo-app
     spec:
+      terminationGracePeriodSeconds: 30
       containers:
         - image: gcr.io/google-samples/hello-app:1.0
           name: demo-app
@@ -34,7 +37,7 @@ spec:
             timeoutSeconds: 1
             periodSeconds: 5
             httpGet:
-              port: 8085
+              port: 8080
               path: /
           livenessProbe:
             initialDelaySeconds: 10
@@ -43,3 +46,10 @@ spec:
             httpGet:
               port: 8080
               path: /
+
+
+# Revision 1 -> Revision 2 -> Revision 3 -> "Rollback"
+#               Revison 4  <-
+
+
+# Version 1 -> Version 2 -> Version 3

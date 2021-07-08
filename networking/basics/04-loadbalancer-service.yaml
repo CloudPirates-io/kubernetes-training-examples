@@ -14,3 +14,5 @@ spec:
       protocol: TCP
   selector:
     run: my-nginx
+
+# Internet / "Cloud" LoadBalancer :80 ->  NodePort:3xxxx -> Target Pod(s) :80

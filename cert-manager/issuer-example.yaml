@@ -7,14 +7,14 @@ spec:
 
 ---
 apiVersion: cert-manager.io/v1
-kind: Issuer
+kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: letenscrypt-staging-key
+      name: letensencrypt-staging-key
     solvers:
     - http01:
        ingress:

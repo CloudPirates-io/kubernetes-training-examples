@@ -59,4 +59,5 @@ spec:
       serviceAccountName: code-server
       volumes:
       - name: data
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: code-server-volume

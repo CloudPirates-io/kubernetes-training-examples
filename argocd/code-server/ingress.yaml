@@ -11,11 +11,10 @@ metadata:
 spec:
 #  tls:
 #    - hosts:
-#        - a1f2ebbada5884804aa84964ca5d1082-4b4bfbc7409618a7.elb.eu-central-1.amazonaws.com
+#        - example.com
 #      secretName: code-server
   rules:
-    - host: a1f2ebbada5884804aa84964ca5d1082-4b4bfbc7409618a7.elb.eu-central-1.amazonaws.com
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix

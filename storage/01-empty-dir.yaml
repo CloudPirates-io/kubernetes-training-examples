@@ -6,11 +6,19 @@ spec:
   containers:
     - image: k8s.gcr.io/test-webserver
       name: test-container
+      resources:
+        limits:
+          cpu: 100m
+          memory: 25Mi
       volumeMounts:
         - mountPath: /cache
           name: cache
     - image: k8s.gcr.io/test-webserver
       name: sidecar
+      resources:
+        limits:
+          cpu: 100m
+          memory: 25Mi
       volumeMounts:
         - mountPath: /tmp/cache
           name: cache

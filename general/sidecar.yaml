@@ -8,21 +8,27 @@ spec:
   containers:
     - name: application
       image: busybox
-      command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
-      resources: 
-        limits: 
+      command: ["sh", "-c", "echo Hello Kubernetes! && sleep 3600"]
+      resources:
+        limits:
           cpu: 100m
-          memory: 1Gi
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 5Mi
       volumeMounts:
         - name: tmp
           mountPath: /tmp
     - name: sidecar
       image: busybox
-      resources: 
-        limits: 
+      resources:
+        limits:
           cpu: 100m
-          memory: 1Gi
-      command: ['sh', '-c', 'echo Sidecar! && sleep 3600']
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 5Mi
+      command: ["sh", "-c", "echo Sidecar! && sleep 3600"]
       volumeMounts:
         - name: tmp
           mountPath: /etc/tmp

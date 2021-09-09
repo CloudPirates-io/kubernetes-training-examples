@@ -4,14 +4,17 @@ metadata:
   name: vhost-ingress
   namespace: ingress-example
 spec:
+  ingressClassName: nginx
   rules:
-  - host: kubernetes.local
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: echoserver
-            port:
-              number: 8080
+    - host: kubernetes.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: echoserver
+                port:
+                  name: web
+                  # you can also use port->number instead of (servicePort) name
+                  # number: 8080

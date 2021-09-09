@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 3
+  replicas: 3 # Default 1 (Best Practice: Dont set in YAML to scale independently from CI/CD and autoscaling)
   selector:
     matchLabels:
       app: nginx

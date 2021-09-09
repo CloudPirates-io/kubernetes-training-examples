@@ -4,15 +4,15 @@ metadata:
   name: demo-app
   namespace: rolling-updates
 spec:
+  ingressClassName: nginx
   rules:
-  - host: "rollingupdates.de"
-    http:
-      paths:
-      - pathType: ImplementationSpecific
-        path: "/"
-        backend:
-          service:
-            name: demo-app
-            port:
-              number: 8080
-            
+    - host: "rollingupdates.de"
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            path: "/"
+            backend:
+              service:
+                name: demo-app
+                port:
+                  number: 8080

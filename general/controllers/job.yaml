@@ -13,5 +13,4 @@ spec:
         - name: pi
           imagePullPolicy: IfNotPresent
           image: perl:threaded-stretch
-          command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
-
+          command: ["perl", "-Mbignum=bpi", "-wle", "print bpi(2000)"]

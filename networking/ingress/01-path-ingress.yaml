@@ -8,13 +8,14 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/proxy-body-size: 8m
 spec:
+  ingressClassName: nginx
   rules:
     - http:
         paths:
           - path: /echoserver
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: echoserver
                 port:
-                  number: 8080
+                  name: web

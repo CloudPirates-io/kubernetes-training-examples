@@ -4,7 +4,7 @@ metadata:
   name: test-empty-dir
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: nginx
       name: test-container
       resources:
         limits:
@@ -13,7 +13,10 @@ spec:
       volumeMounts:
         - mountPath: /cache
           name: cache
-    - image: k8s.gcr.io/test-webserver
+    - image: nginx
+      env:
+        - name: NGINX_PORT
+          value: "8080"
       name: sidecar
       resources:
         limits:

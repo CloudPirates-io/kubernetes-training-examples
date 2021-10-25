@@ -13,6 +13,7 @@ spec:
 #    - hosts:
 #        - example.com
 #      secretName: code-server
+  ingressClassName: nginx
   rules:
     - http:
         paths:

@@ -21,9 +21,9 @@ spec:
       containers:
         - name: echoserver
           resources: {}
-          image: k8s.gcr.io/echoserver:1.10
+          image: ealen/echo-server
           ports:
-            - containerPort: 8080
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -35,6 +35,7 @@ metadata:
 spec:
   ports:
     - port: 8080
+      targetPort: 80
       protocol: TCP
       name: web
   selector:

@@ -28,7 +28,7 @@ spec:
         - name: learning-registry
       containers:
         - name: code-server
-          image: registry.hd-cms.io/cloudpirate/services/code-server:v3.12.0
+          image: registry.cloudpirates.io/cloudpirate/schulungen/code-server:v3.12.0
           imagePullPolicy: Always
           env:
           - name: PASSWORD

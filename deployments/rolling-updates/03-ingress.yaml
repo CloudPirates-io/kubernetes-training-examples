@@ -6,13 +6,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: "rollingupdates.de"
+    - host: rollingupdates.de
       http:
         paths:
-          - pathType: ImplementationSpecific
-            path: "/"
+          - pathType: Prefix
+            path: /
             backend:
               service:
                 name: demo-app
                 port:
-                  number: 8080
+                  name: web

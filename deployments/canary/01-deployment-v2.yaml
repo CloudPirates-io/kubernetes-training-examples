@@ -23,6 +23,8 @@ spec:
       containers:
       - image: gcr.io/google-samples/hello-app:2.0
         name: demo-app-v2
+        resources:
+          limits: {}
         ports:
         - containerPort: 8080
           name: web

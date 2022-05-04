@@ -27,7 +27,7 @@ spec:
           cpu: 100m
           memory: 25Mi
       volumeMounts:
-        - mountPath: /tmp/cache
+        - mountPath: /data/test
           name: cache
   volumes:
     - name: cache

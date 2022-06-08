@@ -39,7 +39,7 @@ spec:
             # probe type
             httpGet:
               path: /
-              port: 8080
+              port: 80
               scheme: HTTP
             # wait X seconds before first check
             initialDelaySeconds: 3

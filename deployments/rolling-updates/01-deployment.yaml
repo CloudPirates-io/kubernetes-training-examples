@@ -22,7 +22,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 30
       containers:
-        - image: gcr.io/google-samples/hello-app:2.0
+        - image: gcr.io/google-samples/hello-app:1.0
           name: demo-app
           resources:
             limits: {}

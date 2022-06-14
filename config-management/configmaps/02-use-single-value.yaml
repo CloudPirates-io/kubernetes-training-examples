@@ -29,3 +29,10 @@ spec:
             configMapKeyRef:
               name: test-config
               key: errorReporting
+        - name: TEST_CONFIG_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: testConfigKey
+              name: test-config
+              # Allow env-variable to be optional - By default variables are always required
+              optional: true

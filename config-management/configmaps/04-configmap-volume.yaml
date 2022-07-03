@@ -28,3 +28,6 @@ spec:
         # Provide the name of the ConfigMap containing the files you want
         # to add to the container
         name: test-config
+        # items:
+        #   - key: configKey
+        #     path: config-key-path.xxx

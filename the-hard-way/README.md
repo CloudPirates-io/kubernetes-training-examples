@@ -138,7 +138,7 @@ Kill current kubelet running in standalone mode: `pkill -f kubelet`
 Register Kubelet to api-server. Maybe you got some error on first 
 start, then simply try again:
 ```
-kubelet --register-node --kubeconfig=".kube/config" &> /etc/kubernetes/kubelet.log &
+kubelet --register-node --kubeconfig="/root/.kube/config" &> /etc/kubernetes/kubelet.log &
 ```
 
 Validate node is registered

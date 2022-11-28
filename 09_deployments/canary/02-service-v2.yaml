@@ -4,7 +4,7 @@ metadata:
   labels:
     run: demo-app-v2
   name: demo-app-v2
-  namespace: example
+  namespace: rolling-updates
 spec:
   ports:
     - port: 8080

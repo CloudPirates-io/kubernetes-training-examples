@@ -8,8 +8,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://gitlab.cloudpirates.io/cloudpirate/schulungen/examples.git'
-    path: argocd/code-server
+    repoURL: 'https://gitlab.cloudpirates.io/training/examples.git'
+    path: 10_additionals/code-server
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'

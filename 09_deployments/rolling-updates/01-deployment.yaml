@@ -45,8 +45,8 @@ spec:
               path: /
 
 
-# Revision 1 -> Revision 2 -> Revision 3 -> "Rollback"
-#               Revision 4  <-
+# Revision 1       -> Revision 2       -> Revision 3 -> "Rollback"
+#                          Revision 4  <-
 
 
-# Version 1 -> Version 2 -> Version 3
+# Version 1 (blue) -> Version 2 (green) -> Version 3 (black)

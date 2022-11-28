@@ -33,7 +33,7 @@ spec:
             # wait X seconds before first check
             initialDelaySeconds: 3
             # check every X seconds
-            periodSeconds: 2
+            periodSeconds: 5
             # mark as failed after X failed checks
             failureThreshold: 3
             # mark as success after X checks
@@ -48,8 +48,8 @@ spec:
               port: 80
               scheme: HTTP
             initialDelaySeconds: 0
-            periodSeconds: 1
-            failureThreshold: 60
+            periodSeconds: 5
+            failureThreshold: 1
             successThreshold: 1
           # assigned resources to this container
           resources:

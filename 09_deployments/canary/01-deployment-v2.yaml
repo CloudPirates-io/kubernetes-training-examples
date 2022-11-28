@@ -4,7 +4,7 @@ metadata:
   labels:
     run: demo-app-v2
   name: demo-app-v2
-  namespace: example
+  namespace: rolling-updates
 spec:
   replicas: 5
   selector:
@@ -21,7 +21,7 @@ spec:
         run: demo-app-v2
     spec:
       containers:
-      - image: argoproj/rollouts-demo:blue
+      - image: argoproj/rollouts-demo:red
         name: demo-app-v2
         resources:
           limits: {}

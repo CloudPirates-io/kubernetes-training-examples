@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: deployment-ingress-v2
-  namespace: example
+  namespace: rolling-updates
   annotations:
     nginx.ingress.kubernetes.io/canary: "true"
     # Canary by header and/or header-value

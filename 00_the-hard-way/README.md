@@ -69,7 +69,7 @@ kubelet --pod-manifest-path /etc/kubernetes/manifests &> /etc/kubernetes/kubelet
 
 Run first manifest file
 ```
-curl wg > /etc/kubernetes/manifests/kubelet-test.yaml
+curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/kubelet-test.yaml > /etc/kubernetes/manifests/kubelet-test.yaml
 ```
 
 Validate with docker ps / docker logs
@@ -155,7 +155,7 @@ ls /etc/kubernetes/manifests/
 Create a pod over kubectl
 ```
 # kubectl-test.yaml
-curl wg > ~/kubectl-test.yaml
+curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/kubectl-test.yaml > ~/kubectl-test.yaml
 
 # apply
 kubectl apply -f kubectl-test.yaml
@@ -190,7 +190,7 @@ Try to create a deployment
 
 ```
 # deployment-test.yaml
-curl wge > ~/deployment-test.yaml
+curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/deployment-test.yaml > ~/deployment-test.yaml
 kubectl apply -f deployment-test.yaml
 ```
 
@@ -224,7 +224,7 @@ kubectl get serviceaccounts
 Deploy Service
 ```
 # add service-test.yaml
-curl https://gitlab.cloudpirates.io/cloudpirate/schulungen/examples/-/raw/main/the-hard-way/service-test.yaml > ~/service-test.yaml
+curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/service-test.yaml > ~/service-test.yaml
 # apply
 kubectl apply -f service-test.yaml
 ```

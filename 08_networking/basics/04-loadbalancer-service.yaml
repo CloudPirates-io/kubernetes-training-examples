@@ -10,7 +10,8 @@ spec:
   # no LB are assigned on minikube, you need to run this in the cloud
   type: LoadBalancer
   ports:
-    - port: 80
+    - port: 80 # service port
+      targetPort: 8080 # application port
       protocol: TCP
       name: web
   selector:

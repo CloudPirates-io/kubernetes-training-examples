@@ -6,6 +6,7 @@ spec:
   completions: 1
   parallelism: 1
   backoffLimit: 4
+  suspend: false
   template:
     spec:
       restartPolicy: Never

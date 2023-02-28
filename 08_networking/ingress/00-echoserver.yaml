@@ -1,22 +1,22 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ingress-example
+  name: echoserver
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: echoserver-deployment
+  name: echoserver
   namespace: ingress-example
 spec:
   selector:
     matchLabels:
-      run: echoserver
+      app: echoserver
   replicas: 1
   template:
     metadata:
       labels:
-        run: echoserver
+        app: echoserver
     spec:
       containers:
         - name: echoserver
@@ -30,8 +30,6 @@ kind: Service
 metadata:
   name: echoserver
   namespace: ingress-example
-  labels:
-    run: echoserver
 spec:
   ports:
     - port: 8080

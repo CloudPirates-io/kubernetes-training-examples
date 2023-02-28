@@ -13,7 +13,6 @@ spec:
       labels:
         app: db # has to match .spec.selector.matchLabels
     spec:
-      terminationGracePeriodSeconds: 60
       containers:
         - name: nginx
           image: nginx:alpine

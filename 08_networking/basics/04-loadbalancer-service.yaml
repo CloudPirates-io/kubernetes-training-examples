@@ -13,7 +13,7 @@ spec:
     - port: 80 # service port
       targetPort: 80 # application port
       protocol: TCP
-      name: web
+      name: webk
   selector:
     run: my-nginx
 

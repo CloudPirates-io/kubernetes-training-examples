@@ -224,7 +224,7 @@ kubectl get serviceaccounts
 Deploy Service
 ```
 # add service-test.yaml
-curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/service-test.yaml > ~/service-test.yaml
+curl wg > ~/service-test.yaml
 # apply
 kubectl apply -f service-test.yaml
 ```

@@ -1,20 +1,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: thanos-minio
-  namespace: observability
+  name: vhost-ingress
+  namespace: ingress-example
 spec:
   ingressClassName: nginx
   rules:
-    - host: minio.aks-infra.cloudpirates.io
+    - host: echoserver.127-0-0-1.nip.io
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: thanos-minio
+                name: echoserver
                 port:
-                  number: 9001
+                  name: web
                   # you can also use port->number instead of (servicePort) name
                   # number: 8080

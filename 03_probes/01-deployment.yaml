@@ -41,16 +41,6 @@ spec:
             # timeout for the requests (in this case httpRequest on /)
             timeoutSeconds: 1
           # liveness probe of the container
-          startupProbe:
-            # liveness type and config
-            httpGet:
-              path: /
-              port: 80
-              scheme: HTTP
-            initialDelaySeconds: 0
-            periodSeconds: 1
-            failureThreshold: 120
-            successThreshold: 1
           livenessProbe:
             # liveness type and config
             httpGet:

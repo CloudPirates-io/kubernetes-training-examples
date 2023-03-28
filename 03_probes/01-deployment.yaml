@@ -21,21 +21,21 @@ spec:
       containers:
         # name of the container
         - name: nginx
-          # image and tag (dont use :latest in production)
+          # image and tag (don´t use :latest in production)
           image: nginx:latest
           # readiness probe of the container
           readinessProbe:
             # probe type
             httpGet:
               path: /
-              port: 80
+              port: 8080
               scheme: HTTP
             # wait X seconds before first check
-            initialDelaySeconds: 3
+            initialDelaySeconds: 0
             # check every X seconds
             periodSeconds: 5
             # mark as failed after X failed checks
-            failureThreshold: 3
+            failureThreshold: 1
             # mark as success after X checks
             successThreshold: 1
             # timeout for the requests (in this case httpRequest on /)
@@ -45,9 +45,8 @@ spec:
             # liveness type and config
             httpGet:
               path: /
-              port: 8080
+              port: 80
               scheme: HTTP
-            initialDelaySeconds: 60
             periodSeconds: 5
             failureThreshold: 1
             successThreshold: 1

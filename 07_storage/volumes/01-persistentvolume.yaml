@@ -8,4 +8,6 @@ spec:
     - ReadWriteOnce
   capacity:
     storage: 1Gi
-########################################
+################################################
+  hostPath:
+    path: /data/static

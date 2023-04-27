@@ -13,10 +13,10 @@ spec:
           cpu: 100m
           memory: 100Mi
       command: ["/bin/sh", "-c", "env"]
+      # Define the environment variable
       env:
         - name: TZ
           value: Europe/Berlin
-        # Define the environment variable
         - name: DEBUG
           valueFrom:
             configMapKeyRef:

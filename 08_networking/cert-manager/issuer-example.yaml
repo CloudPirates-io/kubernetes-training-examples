@@ -4,7 +4,6 @@ metadata:
   name: selfsigning-issuer
 spec:
   selfSigned: {}
-
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -16,6 +15,6 @@ spec:
     privateKeySecretRef:
       name: letensencrypt-staging-key
     solvers:
-    - http01:
-       ingress:
-         class: nginx
+      - http01:
+          ingress:
+            class: nginx

@@ -6,12 +6,12 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/canary: "true"
     # Canary by header and/or header-value
-    #nginx.ingress.kubernetes.io/canary-by-header: "x-version"
-    #nginx.ingress.kubernetes.io/canary-by-header-value: "2"
+    nginx.ingress.kubernetes.io/canary-by-header: "x-version"
+    nginx.ingress.kubernetes.io/canary-by-header-value: "2"
     # Canary shadow
     #nginx.ingress.kubernetes.io/traffic-shadow: demo-app
     # Canary percentage
-    nginx.ingress.kubernetes.io/canary-weight: "100"
+    # nginx.ingress.kubernetes.io/canary-weight: "100"
 spec:
   ingressClassName: nginx
   rules:

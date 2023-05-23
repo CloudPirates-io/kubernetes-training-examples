@@ -11,7 +11,7 @@ metadata:
     # Canary shadow
     #nginx.ingress.kubernetes.io/traffic-shadow: demo-app
     # Canary percentage
-    # nginx.ingress.kubernetes.io/canary-weight: "100"
+    #nginx.ingress.kubernetes.io/canary-weight: "25"
 spec:
   ingressClassName: nginx
   rules:

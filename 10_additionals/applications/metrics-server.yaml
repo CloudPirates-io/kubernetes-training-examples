@@ -13,16 +13,15 @@ spec:
   source:
     chart: metrics-server
     helm:
-      parameters:
-      - name: apiService.create
-        value: "true"
       values: |-
-        fullNameOerride: metrics-server
+        fullnameOverride: metrics-server
+        apiService:
+          create: "true"
         extraArgs:
-          kubelet-insecure-tls: true
-          kubelet-preferred-address-types: InternalIP,ExternalIP,Hostname
+          - "--kubelet-insecure-tls=true"
+          - "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 5.*
+    targetRevision: "*"
   syncPolicy:
     automated:
       prune: true

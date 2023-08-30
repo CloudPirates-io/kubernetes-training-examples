@@ -18,6 +18,7 @@ spec:
       labels:
         app: echoserver
     spec:
+      serviceAccountName: ingress-nginx-admission
       containers:
         - name: echoserver
           resources: {}
@@ -32,8 +33,7 @@ metadata:
   namespace: ingress-example
 spec:
   ports:
-    - port: 8080
-      targetPort: 80
+    - port: 80
       protocol: TCP
       name: web
   selector:

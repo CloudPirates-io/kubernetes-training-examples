@@ -7,6 +7,7 @@ spec:
   parallelism: 1
   backoffLimit: 4
   suspend: false
+  # ttlSecondsAfterFinished: 120 # Automatically delete job after x seconds
   template:
     spec:
       restartPolicy: Never

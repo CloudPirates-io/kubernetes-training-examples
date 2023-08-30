@@ -1,12 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    run: demo-app-v2
   name: demo-app-v2
   namespace: rolling-updates
 spec:
-  replicas: 5
+  replicas: 5 # Do not set in production
   selector:
     matchLabels:
       run: demo-app-v2

@@ -18,7 +18,6 @@ spec:
       labels:
         app: echoserver
     spec:
-      serviceAccountName: ingress-nginx-admission
       containers:
         - name: echoserver
           resources: {}

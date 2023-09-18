@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - bitnami-repo-secret.yaml
-  - metrics-server-yaml
+  - metrics-server.yaml

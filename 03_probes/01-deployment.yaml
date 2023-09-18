@@ -54,8 +54,8 @@ spec:
           resources:
             # resource request (used for sheduling and resource calculation)
             requests:
-              cpu: 100m
-              memory: 50Mi
+              cpu: 10m
+              memory: 20Mi
             # hard limits
             limits:
               cpu: 200m

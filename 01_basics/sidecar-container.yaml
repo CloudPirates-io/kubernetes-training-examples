@@ -1,3 +1,5 @@
+# A Pod (as in a pod of whales or pea pod) is a group of one or more containers, with shared storage and 
+# network resources, and a specification for how to run the containers.
 apiVersion: v1
 kind: Pod
 metadata:
@@ -9,6 +11,10 @@ spec:
     - name: application
       image: busybox
       command: ["sh", "-c", "echo Hello Kubernetes! && sleep 3600"]
+      resources:
+        limits: {}
     - name: sidecar
       image: busybox
       command: ["sh", "-c", "echo Sidecar! && sleep 3600"]
+      resources:
+        limits: {}

@@ -1,3 +1,5 @@
+# A Deployment provides declarative updates for Pods and ReplicaSets.
+# Used for statelesss applications.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,7 +7,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 1 # Default 1 (Best Practice: Dont set in YAML to scale independently from CI/CD and autoscaling)
+  replicas: 1 # Default 1 (Best Practice: Dont set in YAML to scale independently from CI/CD and/or horizontal autoscaling)
   selector:
     matchLabels:
       app: nginx
@@ -17,3 +19,5 @@ spec:
       containers:
         - name: nginx
           image: nginx:alpine
+          resources:
+            limits: {}

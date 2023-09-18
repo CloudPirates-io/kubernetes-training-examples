@@ -1,3 +1,4 @@
+# StatefulSet is the workload API object used to manage stateful applications.
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -16,6 +17,3 @@ spec:
       containers:
         - name: nginx
           image: nginx:alpine
-          ports:
-            - containerPort: 80
-              name: web

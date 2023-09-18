@@ -1,0 +1,11 @@
+# Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+    - name: myapp-container
+      image: nginx
+      resources:
+        limits: {}

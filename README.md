@@ -1,1 +1,1 @@
-# Kubernetes Training Example Files
+# Kubernetes Training Examples

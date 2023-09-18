@@ -6,6 +6,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
+      # Set correct hostname for managed training 
+      # environments (rollingupdates.clusterxx.training.cloudpirates.io)
     - host: rollingupdates.127-0-0-1.nip.io
       http:
         paths:

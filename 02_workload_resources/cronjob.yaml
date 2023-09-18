@@ -1,3 +1,4 @@
+# A CronJob creates Jobs on a repeating schedule.
 apiVersion: batch/v1
 kind: CronJob
 metadata:

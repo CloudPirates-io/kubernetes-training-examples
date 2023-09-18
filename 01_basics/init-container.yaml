@@ -1,3 +1,5 @@
+# A Pod can have multiple containers running apps within it, but it can also have one or more init 
+# containers, which are run before the app containers are started.
 apiVersion: v1
 kind: Pod
 metadata:
@@ -14,3 +16,5 @@ spec:
     - name: application
       image: busybox
       command: ["sh", "-c", "echo Hello Kubernetes! && sleep 3600"]
+      resources:
+        limits: {}

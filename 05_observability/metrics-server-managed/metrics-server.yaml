@@ -3,25 +3,23 @@ kind: Application
 metadata:
   name: metrics-server
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
   destination:
-    namespace: monitoring
+    namespace: observability
     server: https://kubernetes.default.svc
+  project: default
   source:
     chart: metrics-server
     helm:
-      values: |-
+      values: |
         fullnameOverride: metrics-server
         apiService:
-          create: "true"
-        extraArgs:
-          - "--kubelet-insecure-tls=true"
-          - "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
-    repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: "*"
+          create: true
+        args:
+          - --kubelet-insecure-tls
+          - --secure-port=8443
+    repoURL: registry-1.docker.io/bitnamicharts
+    targetRevision: 6.5.1
   syncPolicy:
     automated:
       prune: true

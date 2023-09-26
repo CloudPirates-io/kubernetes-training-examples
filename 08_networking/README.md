@@ -1,4 +1,4 @@
-# Install NGINX Ingress Controller
+# Install NGINX Ingress Controller (Not for Managed Training Environments)
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml

@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       run: my-nginx
-  replicas: 2
+  replicas: 2 # Do not set in production
   template:
     metadata:
       labels:

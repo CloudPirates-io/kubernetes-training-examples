@@ -1,8 +1,11 @@
+# In some (dev) scenarios like the usage of a local kind cluster
+# limits can´t be enforced. In these circumstances the pod will NOT 
+# be terminated with an OOMKill and just stays in running state.
 apiVersion: v1
 kind: Pod
 metadata:
   name: exceed-memory
-  namespace: mem-example
+  namespace: resources
 spec:
   containers:
     - name: memory-demo-2-ctr
@@ -12,5 +15,6 @@ spec:
           memory: 50Mi
         limits:
           memory: 100Mi
+      # Start a stress test that instantly consumes 250Mi of Memory 
       command: ["stress"]
       args: ["--vm", "1", "--vm-bytes", "250M", "--vm-hang", "1"]

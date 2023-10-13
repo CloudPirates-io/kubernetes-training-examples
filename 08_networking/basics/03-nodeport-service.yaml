@@ -9,7 +9,8 @@ spec:
   # opens a defined port on EVERY node in the cluster (range: 30000-32767)
   type: NodePort
   # externalTrafficPolicy: Local | Cluster (default)
-  # @see https://www.asykim.com/blog/deep-dive-into-kubernetes-external-traffic-policies
+  # @see https://blog.getambassador.io/externaltrafficpolicy-local-on-kubernetes-e66e498212f9
+  # @see https://web.archive.org/web/20230322045749/https://www.asykim.com/blog/deep-dive-into-kubernetes-external-traffic-policies
   ports:
     - port: 80
       targetPort: 80

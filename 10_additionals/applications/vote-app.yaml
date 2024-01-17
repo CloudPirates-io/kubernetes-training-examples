@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vote-app
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: vote-app
+  project: vote-app
+  sources:
+    - path: vote-frontend/base
+      repoURL: https://gitlab.cloudpirates.io/training/demo-application/infrastructure/kubernetes.git
+      targetRevision: main
+    - repoURL: https://charts.bitnami.com/bitnami
+      targetRevision: '*'
+      helm:
+        parameters:
+          - name: master.persistence.enabled
+            value: 'false'
+          - name: architecture
+            value: standalone
+          - name: fullnameOverride
+            value: redis-website
+      chart: redis
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true

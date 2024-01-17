@@ -44,7 +44,7 @@ Maybe reboot to completely disable swap.
 #### Download and extract required kubernetes binaries
 
 Download Files
-`wget https://dl.k8s.io/v1.18.3/kubernetes-server-linux-amd64.tar.gz`
+`wget https://cdn.cloudpirates.io/documents/trainings/resources/kubernetes-server-linux-amd64.tar`
 
 Extract Files
 `tar -xzf kubernetes-server-linux-amd64.tar.gz`

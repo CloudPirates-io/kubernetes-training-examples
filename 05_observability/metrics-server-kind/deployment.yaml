@@ -7,7 +7,14 @@ spec:
   strategy:
     rollingUpdate:
       maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: metrics-server
   template:
+    metadata:
+      labels:
+        app: metrics-server
+      name: metrics-server
     spec:
       serviceAccountName: metrics-server
       volumes:

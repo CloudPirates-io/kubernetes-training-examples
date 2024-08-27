@@ -1,15 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    run: demo-app
   name: demo-app
   namespace: rolling-updates
 spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      run: demo-app
+      app: demo-app
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,31 +16,30 @@ spec:
   template:
     metadata:
       labels:
-        run: demo-app
+        app: demo-app
     spec:
-      terminationGracePeriodSeconds: 30
       containers:
-        - image: argoproj/rollouts-demo:blue
+        - image: harbor.cloudpirates.io/training/rollouts-demo:blue
           name: demo-app
           resources:
             limits: {}
           ports:
-            - containerPort: 8080
+            - containerPort: 3000
               name: web
           readinessProbe:
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 5
             httpGet:
-              port: 8080
-              path: /
+              port: 3000
+              path: /readyz
           livenessProbe:
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 5
             httpGet:
-              port: 8080
-              path: /
+              port: 3000
+              path: /livez
 
 
 # Revision 1       -> Revision 2       -> Revision 3 -> "Rollback"

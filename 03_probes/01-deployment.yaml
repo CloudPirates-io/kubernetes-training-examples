@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: probe-example
   namespace: probes
-  labels:
-    app: nginx
 spec:
   # Set strategy "Recreate" to ignore liveness/readiness failure checks
   strategy:

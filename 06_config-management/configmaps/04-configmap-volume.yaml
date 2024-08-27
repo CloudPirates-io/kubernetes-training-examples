@@ -16,7 +16,7 @@ spec:
         [
           "/bin/sh",
           "-c",
-          "ls -la /etc/config/ && echo 'cat gameProperties result: ' && cat /etc/config/gameProperties",
+          "ls -la /etc/config/ && echo '$ cat /etc/config/gameProperties' && cat /etc/config/gameProperties",
         ]
       volumeMounts:
         - name: config-volume

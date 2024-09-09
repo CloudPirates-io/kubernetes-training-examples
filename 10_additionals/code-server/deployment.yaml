@@ -28,7 +28,7 @@ spec:
         - name: learning-registry
       containers:
         - name: code-server
-          image: harbor.cloudpirates.io/training/code-server:v4.16.1
+          image: harbor.cloudpirates.io/training/code-server:v4.23.1
           imagePullPolicy: Always
           env:
           - name: PASSWORD

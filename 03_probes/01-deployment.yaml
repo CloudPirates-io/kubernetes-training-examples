@@ -48,6 +48,15 @@ spec:
             periodSeconds: 5
             failureThreshold: 1
             successThreshold: 1
+          startupProbe:
+            # liveness type and config
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            periodSeconds: 1
+            failureThreshold: 120
+            successThreshold: 1
           # assigned resources to this container
           resources:
             # resource request (used for sheduling and resource calculation)

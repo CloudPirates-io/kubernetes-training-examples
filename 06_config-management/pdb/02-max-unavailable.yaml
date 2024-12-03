@@ -1,0 +1,16 @@
+# PodDisruptionBudget is an object to define the max disruption that can be
+# caused to a collection of pods
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: min-available
+  namespace: config-example
+spec:
+# An eviction is allowed if at most "maxUnavailable" pods selected by
+# "selector" are unavailable after the eviction, i.e. even in absence of the
+# evicted pod. For example, one can prevent all voluntary evictions by
+# specifying 0. This is a mutually exclusive setting with "minAvailable".
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: pod-disruption

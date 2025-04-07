@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://gitlab.cloudpirates.io/training/examples.git'
+    repoURL: https://git.cloudpirates.io/kubernetes-examples.git
     path: 10_additionals/code-server
     targetRevision: main
   destination:

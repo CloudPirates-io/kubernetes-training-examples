@@ -37,7 +37,7 @@ spec:
                 name: code-server
                 key: password
           - name: GIT_REPO
-            value: "https://gitlab.cloudpirates.io/cloudpirate/schulungen/examples.git kubernetes,https://gitlab.cloudpirates.io/cloudpirate/schulungen/docker-examples.git container"
+            value: "https://git.cloudpirates.io/kubernetes-examples.git kubernetes,https://git.cloudpirates.io/container-examples.git container"
           volumeMounts:
           - name: data
             mountPath: /home/coder/cloudpirates

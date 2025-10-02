@@ -1,10 +1,10 @@
-# A Pod can have multiple containers running apps within it, but it can also have one or more init 
-# containers, which are run before the app containers are started.
 apiVersion: v1
 kind: Pod
 metadata:
   name: init-pod
 spec:
+  # List of initialization containers belonging to the pod. Init containers are
+  # executed in order prior to containers being started.
   initContainers:
     - name: init
       image: busybox

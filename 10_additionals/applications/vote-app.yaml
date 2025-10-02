@@ -8,21 +8,10 @@ spec:
     name: in-cluster
     namespace: vote-app
   project: vote-app
-  sources:
-    - path: vote-frontend/base
-      repoURL: https://gitlab.cloudpirates.io/training/demo-application/infrastructure/kubernetes.git
-      targetRevision: main
-    - repoURL: https://charts.bitnami.com/bitnami
-      targetRevision: '*'
-      helm:
-        parameters:
-          - name: master.persistence.enabled
-            value: 'false'
-          - name: architecture
-            value: standalone
-          - name: fullnameOverride
-            value: redis-website
-      chart: redis
+  source:
+    path: vote-frontend/base
+    repoURL: https://gitlab.cloudpirates.io/training/demo-application/infrastructure/kubernetes.git
+    targetRevision: main
   syncPolicy:
     automated: {}
     syncOptions:

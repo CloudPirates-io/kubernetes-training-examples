@@ -11,15 +11,13 @@ spec:
   source:
     chart: metrics-server
     helm:
-      values: |
-        fullnameOverride: metrics-server
+      values: |-
         apiService:
-          create: true
+          insecureSkipTLSVerify: true
         args:
-          - --kubelet-insecure-tls
-          - --secure-port=8443
-    repoURL: registry-1.docker.io/bitnamicharts
-    targetRevision: 6.5.1
+          - '--kubelet-insecure-tls'
+    repoURL: https://kubernetes-sigs.github.io/metrics-server
+    targetRevision: 3.13.0
   syncPolicy:
     automated:
       prune: true

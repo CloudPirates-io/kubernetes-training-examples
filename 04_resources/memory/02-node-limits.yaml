@@ -1,3 +1,5 @@
+# Memory Node Limits - Demonstrates what happens when requesting more memory than available on node.
+# This pod will remain in "Pending" state because no node has 100Gi memory available.
 apiVersion: v1
 kind: Pod
 metadata:
@@ -9,6 +11,6 @@ spec:
       image: nginx
       resources:
         requests:
-          memory: 10Gi
+          memory: 100Gi  # Intentionally excessive - exceeds typical node capacity
         limits:
           memory: 100Gi

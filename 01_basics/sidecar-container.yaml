@@ -1,17 +1,23 @@
-# A Pod (as in a pod of whales or pea pod) is a group of one or more containers, with shared storage and 
-# network resources, and a specification for how to run the containers.
+# Sidecar Container - A container that runs alongside the main application container in a Pod.
+# Sidecars extend and enhance the main container's functionality without modifying it.
+# Common use cases: logging, monitoring, proxies (service mesh), data synchronization.
+# Note: Uses initContainer with restartPolicy: Always (Kubernetes 1.28+) to run continuously.
 apiVersion: v1
 kind: Pod
 metadata:
   name: sidecar-pod
 spec:
+  # Sidecar pattern using initContainer with restartPolicy: Always
+  # This keeps the sidecar running alongside the main container
   initContainers:
     - name: sidecar
       image: busybox
-      restartPolicy: Always
+      restartPolicy: Always  # Keeps sidecar running (requires Kubernetes 1.28+)
+      # Example: log forwarder, metrics collector, or proxy
       command: ["sh", "-c", "echo Sidecar! && sleep 3600"]
       resources:
         limits: {}
+  # Main application container
   containers:
     - name: application
       image: busybox

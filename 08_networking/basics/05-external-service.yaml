@@ -1,9 +1,19 @@
+# ExternalName Service - Maps service to an external DNS name (CNAME record).
+# No proxying occurs - returns CNAME record for the external name.
+# Use case: Accessing external services via Kubernetes service abstraction, service migration.
 apiVersion: v1
 kind: Service
 metadata:
-  name: external-name
-  namespace: networking-example
+  name: external-database
+  namespace: networking
 spec:
-  # use an external name as service endpoint
   type: ExternalName
-  externalName: google.de
+  externalName: example.com  # External DNS name
+# Pods can access via: external-database.networking.svc.cluster.local
+# Kubernetes DNS returns CNAME pointing to database.example.com
+# No selector needed - no pods involved, pure DNS mapping
+
+# Use cases:
+# - Migrating external services into cluster gradually
+# - Abstracting external dependencies behind Kubernetes service names
+# - Multi-cluster service references

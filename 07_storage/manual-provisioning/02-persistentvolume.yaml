@@ -1,0 +1,19 @@
+# PersistentVolume (PV) - Admin perspective: "I'm providing storage to the cluster"
+# Cluster-scoped resource (no namespace) representing actual storage provisioned by an administrator.
+# PVs exist independently of Pods and have a lifecycle independent of any Pod that uses them.
+# This demonstrates manual provisioning - in production, use StorageClasses for dynamic provisioning.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: manual-pv
+spec:
+  storageClassName: manual  # Must match PVC's storageClassName for binding
+  capacity:
+    storage: 1Gi  # Total storage capacity available
+  accessModes:
+    - ReadWriteOnce  # RWO: mountable read-write by single node (most common)
+    # Other modes: ReadOnlyMany (ROX), ReadWriteMany (RWX), ReadWriteOncePod (RWOP)
+  # Storage backend - hostPath is for demo/development only
+  # Production: use NFS, iSCSI, cloud provider volumes (EBS, Azure Disk, GCE PD), etc.
+  hostPath:
+    path: /data/manual-pv  # Directory on the node (create manually on each node for local testing)

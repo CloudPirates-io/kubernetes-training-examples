@@ -1,0 +1,29 @@
+# Virtual Host (Name-Based) Ingress - Routes traffic based on hostname.
+# Different hostnames route to different backends.
+# Use case: Multiple domains/subdomains on same IP (e.g., api.example.com, web.example.com).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vhost-based
+  namespace: ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    # On managed training environment set to correct host 
+    # echoserver.clusterXX.training.cloudpirates.io
+    - host: echoserver.127-0-0-1.nip.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: echoserver
+                port:
+                  name: http
+# nip.io provides wildcard DNS for any IP address:
+# - 127-0-0-1.nip.io resolves to 127.0.0.1
+# - app.192-168-1-100.nip.io resolves to 192.168.1.100
+# For production: Replace with actual domain (e.g., echoserver.example.com)
+
+# Access: http://echoserver.127-0-0-1.nip.io (or your cluster's IP)

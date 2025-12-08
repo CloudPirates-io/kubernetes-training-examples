@@ -1,3 +1,6 @@
+# QoS Class: Burstable - Medium priority, evicted before Guaranteed pods under memory pressure.
+# Requirements: At least one container has requests < limits (or only requests set).
+# Use for: Applications that need guaranteed minimum but can use more when available.
 apiVersion: v1
 kind: Pod
 metadata:
@@ -8,6 +11,7 @@ spec:
     - name: qos-demo-2-ctr
       image: nginx
       resources:
+        # Limits higher than requests = Burstable QoS
         limits:
           memory: 200Mi
         requests:

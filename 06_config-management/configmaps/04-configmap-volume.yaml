@@ -1,33 +1,62 @@
+# ConfigMap Usage - Volume Mount
+# Mounts ConfigMap keys as files in a directory. Useful for config files, scripts, etc.
+# Supports hot-reloading: file content updates when ConfigMap changes (with eventual consistency).
 apiVersion: v1
 kind: Pod
 metadata:
-  name: configmap-volume-pod
-  namespace: config-example
+  name: configmap-volume
+  namespace: config-management
 spec:
   restartPolicy: Never
   containers:
     - name: test-container
       image: busybox
       resources:
-        limits:
-          cpu: 100m
-          memory: 100M
+        limits: {}
       command:
-        [
-          "/bin/sh",
-          "-c",
-          "ls -la /etc/config/ && echo '$ cat /etc/config/gameProperties' && cat /etc/config/gameProperties",
-        ]
+        - "/bin/sh"
+        - "-c"
+        - |
+          echo "=========================================="
+          echo "ConfigMap Volume Mount Demonstration"
+          echo "=========================================="
+          echo ""
+          echo "1. Listing all files in /etc/config/:"
+          echo "   (Each ConfigMap key becomes a file)"
+          echo "------------------------------------------"
+          ls -lah /etc/config/
+          echo ""
+          echo "2. Showing content of 'gameProperties' file:"
+          echo "------------------------------------------"
+          cat /etc/config/gameProperties
+          echo ""
+          echo "3. Showing content of 'config.php' file:"
+          echo "------------------------------------------"
+          cat /etc/config/config.php
+          echo ""
+          echo "4. Showing content of 'jsonConfig' file:"
+          echo "------------------------------------------"
+          cat /etc/config/jsonConfig
+          echo ""
+          echo "5. Showing simple key-value files:"
+          echo "------------------------------------------"
+          echo "configKey: $(cat /etc/config/configKey)"
+          echo "foo: $(cat /etc/config/foo)"
+          echo "debug: $(cat /etc/config/debug)"
+          echo "errorReporting: $(cat /etc/config/errorReporting)"
+          echo ""
+          echo "=========================================="
       volumeMounts:
         - name: config-volume
-          # Caution: If there are some files in the /etc/config/ directory, they will be overwritten.
+          # WARNING: Mounting overwrites existing files in the directory
           mountPath: /etc/config
+          readOnly: true
   volumes:
     - name: config-volume
       configMap:
-        # Provide the name of the ConfigMap containing the files you want
-        # to add to the container
         name: test-config
+        # Optional: Mount only specific keys as files
         # items:
         #   - key: configKey
-        #     path: config-key-path.xxx
+        #     path: custom-filename.conf
+        # Each ConfigMap key becomes a file: /etc/config/<key>

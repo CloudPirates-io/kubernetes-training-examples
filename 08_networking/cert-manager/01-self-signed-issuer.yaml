@@ -1,0 +1,13 @@
+# Self-Signed ClusterIssuer - Issues self-signed certificates for development/testing.
+# Self-signed certificates are NOT trusted by browsers (will show security warnings).
+# Use for: Development, testing, internal services only.
+# Production: Use Let's Encrypt or organization's CA instead.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+spec:
+  selfSigned: {}
+# ClusterIssuer vs Issuer:
+# - ClusterIssuer: Cluster-wide, can issue certificates for any namespace
+# - Issuer: Namespace-scoped, can only issue certificates within its namespace

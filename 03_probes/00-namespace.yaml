@@ -1,3 +1,4 @@
+# Namespace - Provides logical isolation and resource organization for probe examples.
 apiVersion: v1
 kind: Namespace
 metadata:

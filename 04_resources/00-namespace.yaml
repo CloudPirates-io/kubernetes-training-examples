@@ -1,3 +1,4 @@
+# Namespace - Provides logical isolation and resource organization for resource management examples.
 apiVersion: v1
 kind: Namespace
 metadata:

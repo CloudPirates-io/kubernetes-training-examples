@@ -1,42 +1,44 @@
+# Canary Deployment (V2) - New version deployment for canary testing.
+# Runs alongside V1 to gradually test new version with subset of traffic.
+# Used for header-based and percentage-based canary strategies.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-app-v2
   namespace: rolling-updates
 spec:
-  replicas: 5 # Default 1 (Best Practice: Dont set in YAML to scale independently from CI/CD and/or horizontal autoscaling)
+  replicas: 5  # Scale independently for canary testing
   selector:
     matchLabels:
       app: demo-app-v2
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
   template:
     metadata:
       labels:
         app: demo-app-v2
     spec:
       containers:
-      - image: harbor.cloudpirates.io/training/rollouts-demo:purple
-        name: demo-app-v2
-        resources:
-          limits: {}
-        ports:
-        - containerPort: 3000
-          name: web
-        readinessProbe:
-          initialDelaySeconds: 10
-          timeoutSeconds: 1
-          periodSeconds: 5
-          httpGet:
-            port: 3000
-            path: /readyz
-        livenessProbe:
-          initialDelaySeconds: 10
-          timeoutSeconds: 1
-          periodSeconds: 5
-          httpGet:
-            port: 3000
-            path: /livez
+        - name: demo-app
+          image: harbor.cloudpirates.io/training/rollouts-demo:purple
+          resources:
+            limits: {}
+          ports:
+            - containerPort: 3000
+              name: http
+          readinessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 1
+            httpGet:
+              port: 3000
+              path: /readyz
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 1
+            httpGet:
+              port: 3000
+              path: /livez

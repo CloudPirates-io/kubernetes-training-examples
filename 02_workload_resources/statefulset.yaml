@@ -1,18 +1,20 @@
-# StatefulSet is the workload API object used to manage stateful applications.
+# StatefulSet - Manages stateful applications with stable, persistent identities.
+# Provides stable network identities (DNS/hostname) and persistent storage for each Pod.
+# Guarantees ordered deployment, scaling, and updates. Use for databases, caches, and clustered apps.
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: db
 spec:
+  replicas: 3
+  serviceName: db
   selector:
     matchLabels:
-      app: db # has to match .spec.template.metadata.labels
-  serviceName: db
-  replicas: 3
+      app: db
   template:
     metadata:
       labels:
-        app: db # has to match .spec.selector.matchLabels
+        app: db
     spec:
       containers:
         - name: nginx

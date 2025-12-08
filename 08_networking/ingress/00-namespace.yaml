@@ -1,0 +1,5 @@
+# Namespace - Provides logical isolation for ingress examples.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress

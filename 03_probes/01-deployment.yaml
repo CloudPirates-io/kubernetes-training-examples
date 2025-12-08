@@ -1,10 +1,13 @@
+# Probes - Health check mechanisms to monitor container status in Kubernetes.
+# Three types: startupProbe (initial startup), readinessProbe (traffic routing), livenessProbe (restart unhealthy containers)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: probe-example
   namespace: probes
 spec:
-  # Set strategy "Recreate" to ignore liveness/readiness failure checks
+  # Set strategy "Recreate" to demonstrate all pods are terminated before new ones start
+  # Use "RollingUpdate" in production for zero-downtime deployments
   strategy:
     type: Recreate
   replicas: 1
@@ -17,47 +20,47 @@ spec:
         app: nginx
     spec:
       containers:
-        # name of the container
         - name: nginx
-          # image and tag (don´t use :latest in production)
-          image: nginx:latest
-          # readiness probe of the container
+          image: nginx
+          # Readiness probe - Determines if container is ready to receive traffic
+          # Failed readiness removes pod from service endpoints (no restarts)
           readinessProbe:
-            # probe type
+            # HTTP probe type - checks if endpoint returns success (200-399)
             httpGet:
               path: /
               port: 80
               scheme: HTTP
-            # wait X seconds before first check
+            # Wait before first check after startup probe succeeds
             initialDelaySeconds: 0
-            # check every X seconds
+            # Check every X seconds
             periodSeconds: 5
-            # mark as failed after X failed checks
+            # Mark as not ready after X failed checks
             failureThreshold: 1
-            # mark as success after X checks
+            # Mark as ready after X successful checks
             successThreshold: 1
-            # timeout for the requests (in this case httpRequest on /)
+            # Timeout for the HTTP request
             timeoutSeconds: 1
-          # liveness probe of the container
+          # Liveness probe - Determines if container is healthy (restarts if failing)
+          # Failed liveness causes container restart
           livenessProbe:
-            # liveness type and config
+            # HTTP probe checking same endpoint
             httpGet:
               path: /
               port: 80
               scheme: HTTP
+            # Wait before first check after startup probe succeeds
+            initialDelaySeconds: 10
+            # Check every X seconds
             periodSeconds: 5
+            # Restart after X consecutive failures
             failureThreshold: 1
+            # Mark as healthy after X successful checks
             successThreshold: 1
-          # assigned resources to this container
+            # Timeout for the HTTP request
+            timeoutSeconds: 1
+          # Assigned resources to this container
           resources:
-            # resource request (used for sheduling and resource calculation)
-            requests:
-              cpu: 10m
-              memory: 20Mi
-            # hard limits
-            limits:
-              cpu: 200m
-              memory: 100Mi
+            limits: {}
           # container ports
           ports:
             - containerPort: 80

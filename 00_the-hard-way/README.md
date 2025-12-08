@@ -44,7 +44,7 @@ Maybe reboot to completely disable swap.
 #### Download and extract required kubernetes binaries
 
 Download Files
-`wget https://cdn.cloudpirates.io/documents/trainings/resources/kubernetes-server-linux-amd64.tar`
+`wget https://dl.k8s.io/v1.18.20/kubernetes-server-linux-amd64.tar.gz`
 
 Extract Files
 `tar -xzf kubernetes-server-linux-amd64.tar.gz`
@@ -68,8 +68,14 @@ kubelet --pod-manifest-path /etc/kubernetes/manifests &> /etc/kubernetes/kubelet
 ```
 
 Run first manifest file
+
+
 ```
-curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/kubelet-test.yaml > /etc/kubernetes/manifests/kubelet-test.yaml
+# Switch to home directory
+cd
+
+git clone https://git.cloudpirates.io/kubernetes-examples.git
+cp kubernetes-examples/00_the-hard-way/kubelet-test.yaml > /etc/kubernetes/manifests/kubelet-test.yaml
 ```
 
 Validate with docker ps / docker logs
@@ -155,7 +161,7 @@ ls /etc/kubernetes/manifests/
 Create a pod over kubectl
 ```
 # kubectl-test.yaml
-curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/kubectl-test.yaml > ~/kubectl-test.yaml
+cd ~/kubernetes-examples/00_the-hard-way
 
 # apply
 kubectl apply -f kubectl-test.yaml
@@ -190,7 +196,7 @@ Try to create a deployment
 
 ```
 # deployment-test.yaml
-curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/deployment-test.yaml > ~/deployment-test.yaml
+cd ~/kubernetes-examples/00_the-hard-way
 kubectl apply -f deployment-test.yaml
 ```
 
@@ -224,7 +230,7 @@ kubectl get serviceaccounts
 Deploy Service
 ```
 # add service-test.yaml
-curl https://gitlab.cloudpirates.io/training/examples/-/raw/main/00_the-hard-way/service-test.yaml > ~/service-test.yaml
+cd ~/kubernetes-examples/00_the-hard-way
 # apply
 kubectl apply -f service-test.yaml
 ```

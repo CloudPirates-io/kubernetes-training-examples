@@ -1,5 +1,5 @@
-# A Deployment provides declarative updates for Pods and ReplicaSets.
-# Used for statelesss applications.
+# Deployment - Manages stateless applications with declarative updates for Pods and ReplicaSets.
+# Provides rolling updates, rollbacks, and scaling capabilities. Recommended for most workloads.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,16 +13,6 @@ spec:
       labels:
         app: nginx
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - topologyKey: "kubernetes.io/hostname"
-              labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
       containers:
         - name: nginx
           image: nginx:alpine

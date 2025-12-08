@@ -1,3 +1,6 @@
+# Ingress - Exposes the demo-app service externally via HTTP.
+# Routes traffic to the active deployment (demo-app).
+# For Blue/Green: Update backend service name to switch traffic instantly.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -6,8 +9,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-      # Set correct hostname for managed training 
-      # environments (rollingupdates.clusterxx.training.cloudpirates.io)
+    # Set correct hostname for managed training
+    # environments (rollingupdates.clusterxx.training.cloudpirates.io)
     - host: rollingupdates.127-0-0-1.nip.io
       http:
         paths:
@@ -15,6 +18,6 @@ spec:
             path: /
             backend:
               service:
-                name: demo-app
+                name: demo-app 
                 port:
-                  name: web
+                  name: http

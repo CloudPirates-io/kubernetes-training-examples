@@ -1,3 +1,6 @@
+# Resource Requests and Limits - Control container resource allocation and consumption.
+# Requests: Minimum guaranteed resources (used for scheduling). Limits: Maximum allowed resources (enforced at runtime).
+# Best Practice: Set memory requests = limits for guaranteed QoS. CPU can be burstable (requests < limits).
 apiVersion: v1
 kind: Pod
 metadata:
@@ -8,12 +11,18 @@ spec:
     - name: nginx
       image: nginx
       resources:
+        # Requests - Minimum guaranteed resources for scheduling
         requests:
-          # Set memory requests equal to memory limits
+          # Memory request - guaranteed memory allocation
+          # Setting requests = limits provides "Guaranteed" QoS class (prevents eviction under memory pressure)
           memory: 56Mi
+          # CPU request - guaranteed CPU time in millicores (10m = 0.01 CPU cores)
           cpu: 10m
-        # It is not recommended to set cpu limits to your pods
-        # @see https://home.robusta.dev/blog/stop-using-cpu-limits
-        # @see https://github.com/kubernetes/design-proposals-archive/blob/8da1442ea29adccea40693357d04727127e045ed/node/resource-qos.md#compressible-resource-guarantees 
+        # Limits - Maximum allowed resource consumption (hard caps)
         limits:
+          # Memory limit - container killed (OOMKilled) if exceeded
+          # Match request for predictable memory allocation
           memory: 56Mi
+          # CPU limit - container throttled if exceeded (not killed)
+          # Higher than request allows bursting for traffic spikes
+          cpu: 500m

@@ -1,0 +1,26 @@
+# hostPath Volume - Mounts a file or directory from the host node's filesystem into the Pod.
+# SECURITY WARNING: Provides direct access to host filesystem - major security risk!
+# NOT PORTABLE: Pod is bound to specific node with that path, breaks pod mobility.
+# Valid use cases: DaemonSets for log collection, node monitoring agents, or local development only.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-demo
+  namespace: storage
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+      resources:
+        limits:
+          cpu: 100m
+          memory: 25Mi
+      volumeMounts:
+        - mountPath: /host-logs
+          name: host-volume
+          readOnly: true  # Best practice: mount as read-only when possible
+  volumes:
+    - name: host-volume
+      hostPath:
+        path: /var/log  # Path on the host node
+        type: Directory  # Types: Directory, DirectoryOrCreate, File, FileOrCreate

@@ -1,35 +1,40 @@
+# Rolling Update Deployment - Kubernetes native zero-downtime deployments.
+# Gradually replaces old pods with new pods to ensure continuous availability.
+# Use kubectl set image to trigger updates, kubectl rollout status/history/undo for management.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-app
   namespace: rolling-updates
 spec:
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 10  # Number of old ReplicaSets to keep for rollback
   selector:
     matchLabels:
       app: demo-app
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
+      maxSurge: 25%  # Max number of pods above desired count during update
+      maxUnavailable: 25%  # Max number of pods unavailable during update
   template:
     metadata:
       labels:
         app: demo-app
     spec:
       containers:
-        - image: harbor.cloudpirates.io/training/rollouts-demo:blue
-          name: demo-app
+        - name: demo-app
+          image: harbor.cloudpirates.io/training/rollouts-demo:blue
           resources:
             limits: {}
           ports:
             - containerPort: 3000
-              name: web
+              name: http
           readinessProbe:
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 1
             httpGet:
               port: 3000
               path: /readyz
@@ -37,13 +42,15 @@ spec:
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 1
             httpGet:
               port: 3000
               path: /livez
-
-
-# Revision 1       -> Revision 2       -> Revision 3 -> "Rollback"
-#                     Revision 4       <-
-
-
-# Version 1 (blue) -> Version 2 (green) -> Version 3 (red)
+# Rolling Update Demo Commands:
+# 1. Update to green: kubectl set image deployment/demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:green -n deployments
+# 2. Watch rollout: kubectl rollout status deployment/demo-app -n deployments
+# 3. Update to red (with failing probe): kubectl set image deployment/demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:red -n deployments
+# 4. Rollout will pause when probes fail - rollback: kubectl rollout undo deployment/demo-app -n deployments
+# 5. View history: kubectl rollout history deployment/demo-app -n deployments
+# 6. Rollback to specific revision: kubectl rollout undo deployment/demo-app --to-revision=2 -n deployments

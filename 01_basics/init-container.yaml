@@ -1,15 +1,27 @@
+# Init Container - Specialized containers that run before app containers in a Pod.
+# Init containers run to completion sequentially and must succeed before the main containers start.
+# Use cases: setup scripts, wait for dependencies, clone git repos, generate configs.
 apiVersion: v1
 kind: Pod
 metadata:
   name: init-pod
 spec:
-  # List of initialization containers belonging to the pod. Init containers are
-  # executed in order prior to containers being started.
+  # Init containers execute in order before main containers start
+  # Each must complete successfully before the next begins
   initContainers:
-    - name: init
+    - name: git-checkout
       image: busybox
-      command:
-        ["sh", "-c", 'echo "Init Start" && sleep 10 && echo "Init complete"']
+      # Simulates initialization work (database migration, config setup, etc.)
+      command: ["sh", "-c", 'echo "Init Start" && sleep 20 && echo "Init complete"']
+      resources:
+        limits: {}
+    - name: chown
+      image: busybox
+      # Simulates initialization work (database migration, config setup, etc.)
+      command: ["sh", "-c", 'echo "Init Start" && sleep 5 && echo "Init complete"']
+      resources:
+        limits: {}
+  # Main application containers start only after all init containers succeed
   containers:
     - name: application
       image: busybox

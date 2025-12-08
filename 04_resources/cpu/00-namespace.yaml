@@ -1,3 +1,4 @@
+# Namespace - Provides logical isolation for CPU resource limit examples.
 apiVersion: v1
 kind: Namespace
 metadata:

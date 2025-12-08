@@ -1,38 +1,40 @@
+# ConfigMap Usage - Single Values as Environment Variables
+# Best practice: Explicitly map individual keys for better validation and visibility.
+# This approach fails fast if a required key is missing (unless marked optional: true).
 apiVersion: v1
 kind: Pod
 metadata:
-  name: single-value-test
-  namespace: config-example
+  name: configmap-env-single
+  namespace: config-management
 spec:
   restartPolicy: Never
   containers:
     - name: test-container
       image: busybox
       resources:
-        limits:
-          cpu: 100m
-          memory: 100Mi
+        limits: {}
       command: ["/bin/sh", "-c", "env"]
-      # Define the environment variable
+      # Map individual ConfigMap keys to environment variables
       env:
+        # Regular environment variable (not from ConfigMap)
         - name: TZ
           value: Europe/Berlin
+        # Reference specific ConfigMap key
         - name: DEBUG
           valueFrom:
             configMapKeyRef:
-              # The ConfigMap containing the value you want to assign to MY_ENV_VARIABLE
               name: test-config
-              # Specify the key associated with the value
               key: debug
         - name: ERROR_REPORTING
           valueFrom:
             configMapKeyRef:
               name: test-config
               key: errorReporting
+        # Optional ConfigMap key - Pod will start even if key doesn't exist
+        # This demonstrates that missing keys are tolerated when optional: true
         - name: TEST_CONFIG_KEY
           valueFrom:
             configMapKeyRef:
-              key: testConfigKey
               name: test-config
-              # Allow env-variable to be optional - By default variables are always required
-              optional: true
+              key: testConfigKey  # This key doesn't exist in the ConfigMap
+              optional: true  # Without this, pod startup would fail with a CreateContainerConfigError

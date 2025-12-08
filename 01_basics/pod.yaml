@@ -1,11 +1,16 @@
-# Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.
+# Pod - The smallest deployable unit in Kubernetes.
+# A Pod represents a group of one or more containers with shared storage, network, and lifecycle.
+# Pods are ephemeral and should not be created directly in production - use Workload Resources instead.
 apiVersion: v1
 kind: Pod
 metadata:
   name: myapp-pod
 spec:
   containers:
+    # Main application container
     - name: myapp-container
       image: nginx
+      # Resources: CPU and memory allocation (covered in detail in 04_resources/)
+      # Note: Empty limits {} reduces the Kubernetes VSCode extension warning to only this line
       resources:
         limits: {}

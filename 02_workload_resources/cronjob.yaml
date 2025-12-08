@@ -1,4 +1,6 @@
-# A CronJob creates Jobs on a repeating schedule.
+# CronJob - Creates Jobs on a repeating schedule using cron format.
+# Runs periodic tasks at specified times (hourly, daily, weekly, etc.).
+# Use for scheduled backups, report generation, cleanup tasks, and periodic data processing.
 apiVersion: batch/v1
 kind: CronJob
 metadata:

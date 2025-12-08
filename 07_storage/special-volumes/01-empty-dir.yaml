@@ -1,0 +1,23 @@
+# emptyDir Volume - Ephemeral storage shared between containers in a Pod.
+# Data is deleted when the Pod is removed from the node (pod restart, deletion, or node failure).
+# Use cases: temporary cache, scratch space, shared data between init/sidecar containers.
+# NOT for persistent data - use PersistentVolumes for data that must survive pod restarts.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-demo
+  namespace: storage
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+      resources:
+        limits:
+          cpu: 100m
+          memory: 25Mi
+      volumeMounts:
+        - mountPath: /cache
+          name: cache-volume
+  volumes:
+    - name: cache-volume
+      emptyDir: {}  # Can also specify sizeLimit and medium (e.g., medium: Memory for tmpfs)

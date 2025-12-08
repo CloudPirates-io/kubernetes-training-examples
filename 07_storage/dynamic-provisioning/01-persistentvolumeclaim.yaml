@@ -1,0 +1,19 @@
+# PersistentVolumeClaim with Dynamic Provisioning
+# Developer only needs to request storage - no admin intervention required!
+# The default StorageClass provisioner automatically creates a matching PersistentVolume.
+# This is the production-recommended approach for managing storage.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dynamic-pvc
+  namespace: storage
+spec:
+  # storageClassName omitted - uses cluster's default StorageClass
+  # To use specific class: storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+# When applied, the provisioner automatically creates a PV and binds it to this PVC
+# Check status: kubectl get pvc -n storage

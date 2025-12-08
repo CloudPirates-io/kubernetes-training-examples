@@ -1,31 +1,41 @@
+# LoadBalancer Service - Provisions an external load balancer for the service.
+# Automatically creates a NodePort and provisions a load balancer that routes to it.
+# Works with cloud providers (AWS, Azure, GCP) and on-premises solutions (MetalLB, Cilium, kube-vip).
+# Use case: Production external access with automated load balancer provisioning.
 apiVersion: v1
 kind: Service
 metadata:
-  name: loadbalancer-my-nginx
-  namespace: networking-example
+  name: nginx-loadbalancer
+  namespace: networking
   labels:
-    run: my-nginx
+    app: nginx
 spec:
-  # assign an external LoadBalancer to this service
-  # no LB are assigned on minikube, you need to run this in the cloud
   type: LoadBalancer
   ports:
-    - port: 80 # service port
-      targetPort: 80 # application port
+    - port: 80  # External load balancer port
+      targetPort: http  # Maps to container port named "http" (80)
       protocol: TCP
-      name: web
+      name: http
   selector:
-    run: my-nginx
+    app: nginx
+# Traffic flow: Internet → LoadBalancer:80 → NodePort:3xxxx → Pods:80
 
-# Internet / "Cloud" LoadBalancer :80 ->  NodePort:3xxxx -> Target Pod(s) :80
+# Important: LoadBalancer Services work out-of-the-box only in cloud environments!
+# Cloud providers automatically provision load balancers when Service type=LoadBalancer is created.
+# On bare-metal/on-premises clusters, additional setup is required (install and configure a LoadBalancer controller).
 
-# Aufbau / Struktur auf Bare-Metal Systemen
+# LoadBalancer Implementations:
 #
-# Einfaches Beispiel (nicht Best-Practice)
-#      Externer Server
-#      HAProxy -> Port 80 eingehend -> Port 3XXXX (auf alle Cluster Nodes verteilt)
-
-# Erweitertes Beispiel (Best-Practice)
-#      Externer Server
-#      HAProxy -> HealthCheck definiert (3XXXXX) -> (Nur "eine" Node bekommt Status healthy zurück)
-#              -> Port 80 eingehend -> Port 3XXXX (auf alle Healthy Cluster Nodes verteilt)
+# Cloud Providers (no additional setup required):
+# - AWS: Elastic Load Balancer (ELB/ALB/NLB) - automatic provisioning
+# - Azure: Azure Load Balancer - automatic provisioning
+# - GCP: Google Cloud Load Balancer - automatic provisioning
+#
+# On-Premises / Bare-Metal (requires installation and configuration):
+# - MetalLB: L2/BGP load balancer (most common for bare-metal)
+# - Cilium: BGP-based load balancer with eBPF (requires Cilium CNI)
+# - kube-vip: Virtual IP and load balancing
+# - VMware NSX: Load balancer for vSphere environments
+# - OpenStack Octavia: Load balancer for OpenStack clouds
+#
+# Without LoadBalancer controller: External IP stays <pending> indefinitely (e.g., minikube/kind/kubeadm without setup)

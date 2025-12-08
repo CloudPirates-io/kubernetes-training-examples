@@ -7,7 +7,7 @@ spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-  description: Containers all application related to our vote-app
+  description: Contains all applications related to our vote-app
   destinations:
   - name: '*'
     namespace: '*'

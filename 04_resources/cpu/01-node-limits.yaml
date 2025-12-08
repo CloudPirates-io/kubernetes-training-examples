@@ -1,3 +1,6 @@
+# CPU Node Limits - Demonstrates what happens when requesting more CPU than available on node.
+# This pod will remain in "Pending" state because no node has 100 CPU cores available.
+# Useful for teaching about resource constraints and pod scheduling failures.
 apiVersion: v1
 kind: Pod
 metadata:
@@ -9,6 +12,6 @@ spec:
       image: nginx
       resources:
         requests:
-          cpu: "100" # 100 cores (not millicores)
+          cpu: "100" # 100 full cores (not millicores) - intentionally excessive
         limits:
           cpu: "100"

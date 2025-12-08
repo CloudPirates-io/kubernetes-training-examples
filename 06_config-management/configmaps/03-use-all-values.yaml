@@ -1,17 +1,22 @@
+# ConfigMap Usage - All Values via envFrom
+# Loads ALL ConfigMap keys as environment variables automatically.
+# WARNING: Not recommended - no validation, can cause conflicts, hard to track what's being loaded.
+# Prefer explicit mapping (02-use-single-value.yaml) for production use.
 apiVersion: v1
 kind: Pod
 metadata:
-  name: all-values-test
-  namespace: config-example
+  name: configmap-env-all
+  namespace: config-management
 spec:
   restartPolicy: Never
   containers:
     - name: test-container
-      image: k8s.gcr.io/busybox
-      resources: {}
+      image: busybox
+      resources:
+        limits: {}
       command: ["/bin/sh", "-c", "env"]
-      # Do not use: No validity check for wrong or non existing key/values
-      # Use instead explicitely configured variables -> 02-use-single-value.yaml
+      # envFrom loads ALL ConfigMap keys automatically
+      # Drawbacks: No validation, unexpected variables, naming conflicts
       envFrom:
         - configMapRef:
             name: test-config

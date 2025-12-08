@@ -1,0 +1,17 @@
+# PersistentVolumeClaim (PVC) - Developer perspective: "I'm requesting storage"
+# Namespace-scoped resource representing a request for storage by a user/application.
+# Kubernetes binds PVC to a suitable PV based on storageClassName, capacity, and accessModes.
+# Separation of concerns: Developers request storage without knowing underlying infrastructure.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: manual-pvc
+  namespace: storage
+spec:
+  storageClassName: manual  # Must match PV's storageClassName
+  accessModes:
+    - ReadWriteOnce  # Requested access mode (must be supported by PV)
+  resources:
+    requests:
+      storage: 1Gi  # Minimum storage required (must be <= PV capacity)
+# Status will show "Bound" once matched to PV, "Pending" if no suitable PV found

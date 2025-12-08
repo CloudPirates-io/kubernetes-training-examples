@@ -1,26 +1,26 @@
+# Deployment - Creates pods for demonstrating different Service types.
+# This nginx deployment will be exposed via ClusterIP, NodePort, and LoadBalancer services.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-nginx
-  namespace: networking-example
+  name: nginx
+  namespace: networking
 spec:
+  replicas: 2  # Multiple replicas to demonstrate load balancing
   selector:
     matchLabels:
-      run: my-nginx
-  replicas: 2 # Do not set in production
+      app: nginx
   template:
     metadata:
       labels:
-        run: my-nginx
+        app: nginx
     spec:
       containers:
-        - name: my-nginx
+        - name: nginx
           image: nginx
           resources:
-            requests:
-              memory: 10Mi
-              cpu: 5m
             limits: {}
           ports:
             - containerPort: 80
-              name: web
+              name: http
+              protocol: TCP

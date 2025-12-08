@@ -1,9 +1,11 @@
-# A ConfigMap is an API object used to store non-confidential data in key-value pairs.
+# ConfigMap - Stores non-confidential configuration data in key-value pairs.
+# Decouples configuration from container images, making applications more portable.
+# Use for: application settings, environment variables, command-line arguments, config files.
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: test-config
-  namespace: config-example
+  namespace: config-management
 data:
   # single values
   configKey: my-config-value

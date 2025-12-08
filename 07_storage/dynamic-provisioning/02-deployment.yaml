@@ -1,0 +1,35 @@
+# Deployment Using Dynamically Provisioned Storage
+# Production example: Nginx serving content from persistent storage.
+# Storage persists across pod restarts, updates, and reschedules.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dynamic-storage
+  namespace: storage
+  labels:
+    app: nginx-dynamic
+spec:
+  selector:
+    matchLabels:
+      app: nginx-dynamic
+  template:
+    metadata:
+      labels:
+        app: nginx-dynamic
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          resources:
+            limits: {}
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: www-data
+      volumes:
+        - name: www-data
+          persistentVolumeClaim:
+            claimName: dynamic-pvc  # References PVC in same namespace
+# Test persistence:
+# 1. kubectl exec -n storage <pod> -- sh -c 'echo "Hello from persistent storage" > /usr/share/nginx/html/index.html'
+# 2. kubectl delete pod -n storage <pod>
+# 3. After pod recreates, curl the service - content persists!

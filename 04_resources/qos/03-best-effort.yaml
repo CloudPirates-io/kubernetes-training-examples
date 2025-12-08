@@ -1,3 +1,7 @@
+# QoS Class: BestEffort - Lowest priority, first to be evicted under memory pressure.
+# Requirements: No requests or limits set for any container.
+# Use for: Non-critical workloads, batch jobs, or development environments.
+# WARNING: Can be killed at any time if node runs out of resources.
 apiVersion: v1
 kind: Pod
 metadata:
@@ -7,3 +11,4 @@ spec:
   containers:
     - name: qos-demo-3-ctr
       image: nginx
+      # No resources specified = BestEffort QoS

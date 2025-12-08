@@ -1,3 +1,6 @@
+# QoS Class: Guaranteed - Highest priority, never evicted under memory pressure.
+# Requirements: All containers must have requests = limits for both CPU and memory.
+# Use for: Critical applications that need predictable, dedicated resources.
 apiVersion: v1
 kind: Pod
 metadata:
@@ -8,6 +11,7 @@ spec:
     - name: qos-demo-ctr
       image: nginx
       resources:
+        # Limits must equal requests for Guaranteed QoS
         limits:
           memory: 50Mi
           cpu: 100m

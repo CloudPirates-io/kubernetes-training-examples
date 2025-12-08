@@ -1,6 +1,7 @@
-# In some (dev) scenarios like the usage of a local kind cluster
-# limits can´t be enforced. In these circumstances the pod will NOT 
-# be terminated with an OOMKill and just stays in running state.
+# Memory Limit Exceeded - Demonstrates OOMKill behavior when container exceeds memory limits.
+# This pod attempts to use 250Mi but has a limit of 100Mi, causing OOMKilled status.
+# Note: In some dev scenarios (like local kind clusters), limits may not be enforced,
+# and the pod might stay running instead of being terminated.
 apiVersion: v1
 kind: Pod
 metadata:
@@ -14,7 +15,7 @@ spec:
         requests:
           memory: 50Mi
         limits:
-          memory: 100Mi
-      # Start a stress test that instantly consumes 250Mi of Memory 
+          memory: 100Mi  # Container will be OOMKilled when exceeding this
+      # Start stress test that instantly consumes 250Mi (exceeds 100Mi limit)
       command: ["stress"]
       args: ["--vm", "1", "--vm-bytes", "250M", "--vm-hang", "1"]

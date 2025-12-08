@@ -1,21 +1,25 @@
+# NodePort Service - Exposes service on a static port on each node's IP.
+# Accessible from outside the cluster via <NodeIP>:<NodePort>.
+# Opens the specified port (30000-32767) on EVERY node in the cluster.
+# Use case: Development/testing, quick external access without load balancer.
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodeport-my-nginx
-  namespace: networking-example
+  name: nginx-nodeport
+  namespace: networking
   labels:
-    run: my-nginx
+    app: nginx
 spec:
-  # opens a defined port on EVERY node in the cluster (range: 30000-32767)
   type: NodePort
-  # externalTrafficPolicy: Local | Cluster (default)
-  # @see https://blog.getambassador.io/externaltrafficpolicy-local-on-kubernetes-e66e498212f9
-  # @see https://web.archive.org/web/20230322045749/https://www.asykim.com/blog/deep-dive-into-kubernetes-external-traffic-policies
   ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 32730 # if not defined, kubernetes will automatically assign a free NodePort
+    - port: 80  # Service port (cluster-internal)
+      targetPort: http  # Maps to container port named "http" (80)
+      nodePort: 32730  # External port on each node (optional, auto-assigned if omitted)
       protocol: TCP
-      name: web
+      name: http
   selector:
-    run: my-nginx
+    app: nginx
+  # externalTrafficPolicy: Cluster  # Default: distributes traffic across all nodes
+  # externalTrafficPolicy: Local    # Alternative: only routes to pods on the receiving node (preserves source IP)
+# Access: http://<any-node-ip>:32730
+# NodePort range: 30000-32767 (configurable in kube-apiserver)

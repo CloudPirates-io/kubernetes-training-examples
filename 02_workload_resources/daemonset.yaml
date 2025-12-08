@@ -1,18 +1,18 @@
-# A DaemonSet ensures that all (or some) Nodes run a copy of a Pod. As nodes are added to the cluster, 
-# Pods are added to them. As nodes are removed from the cluster, those Pods are garbage collected. 
-# Deleting a DaemonSet will clean up the Pods it created.
+# DaemonSet - Ensures a copy of a Pod runs on all (or selected) nodes in the cluster.
+# Automatically adds Pods to new nodes and removes them when nodes are deleted.
+# Common use cases: log collectors, monitoring agents, cluster storage daemons, network plugins.
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: fluentd-elasticsearch
+  name: prometheus-node-exporter
 spec:
   selector:
     matchLabels:
-      name: fluentd-elasticsearch
+      name: prometheus-node-exporter
   template:
     metadata:
       labels:
-        name: fluentd-elasticsearch
+        name: prometheus-node-exporter
     spec:
       tolerations:
       # these tolerations are to have the daemonset runnable on control plane nodes
@@ -24,19 +24,7 @@ spec:
         operator: Exists
         effect: NoSchedule
       containers:
-      - name: fluentd-elasticsearch
-        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+      - name: prometheus-node-exporter
+        image: prom/node-exporter:latest
         resources:
-          limits:
-            memory: 200Mi
-          requests:
-            cpu: 10m
-            memory: 50Mi
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log
-      terminationGracePeriodSeconds: 30
-      volumes:
-      - name: varlog
-        hostPath:
-          path: /var/log
+          limits: {}

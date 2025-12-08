@@ -5,6 +5,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: prometheus-node-exporter
+  namespace: workload-resources
 spec:
   selector:
     matchLabels:

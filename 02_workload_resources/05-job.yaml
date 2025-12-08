@@ -5,6 +5,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: pi
+  namespace: workload-resources
 spec:
   completions: 1
   parallelism: 1

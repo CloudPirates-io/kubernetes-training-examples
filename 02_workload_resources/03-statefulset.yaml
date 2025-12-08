@@ -4,18 +4,21 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: db
+  name: redis
+  namespace: workload-resources
 spec:
   replicas: 3
-  serviceName: db
+  serviceName: redis-headless  # Headless service for stable network identities
   selector:
     matchLabels:
-      app: db
+      app: redis
   template:
     metadata:
       labels:
-        app: db
+        app: redis
     spec:
       containers:
-        - name: nginx
-          image: nginx:alpine
+        - name: redis
+          image: redis:alpine
+          resources:
+            limits: {}

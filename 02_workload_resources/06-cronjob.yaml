@@ -5,6 +5,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: hello
+  namespace: workload-resources
 spec:
   # Crontab configuration - in this case run every minute
   schedule: "*/1 * * * *"

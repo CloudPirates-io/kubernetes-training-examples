@@ -5,19 +5,19 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: frontend
+  namespace: workload-resources
   labels:
-    app: guestbook
-    tier: frontend
+    app: frontend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      tier: frontend
+      app: frontend
   template:
     metadata:
       labels:
-        tier: frontend
+        app: frontend
     spec:
       containers:
-        - name: php-redis
-          image: gcr.io/google_samples/gb-frontend:v3
+        - name: nginx
+          image: nginx:alpine

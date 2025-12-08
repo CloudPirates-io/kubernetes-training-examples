@@ -1,0 +1,6 @@
+# Namespace - Isolated environment for workload resource examples.
+# Provides resource isolation and organization for deployment, statefulset, daemonset, job, and cronjob examples.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: workload-resources

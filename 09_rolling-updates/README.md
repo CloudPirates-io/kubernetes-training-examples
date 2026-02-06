@@ -43,7 +43,7 @@ Progressive traffic splitting for safer deployments.
 kubectl apply -f rolling-updates/00-namespace.yaml
 
 # Verify namespace
-kubectl get namespace deployments
+kubectl get namespace rolling-updates
 ```
 
 ---
@@ -57,8 +57,8 @@ kubectl get namespace deployments
 kubectl apply -f rolling-updates/
 
 # Verify deployment
-kubectl get deployment -n deployments
-kubectl get pods -n deployments
+kubectl get deployment -n rolling-updates
+kubectl get pods -n rolling-updates
 
 # Access the dashboard
 # Open: http://rollingupdates.127-0-0-1.nip.io:8080
@@ -71,10 +71,10 @@ Scale up to see rolling update behavior more clearly:
 
 ```bash
 # Scale deployment
-kubectl scale deployment/demo-app --replicas=10 -n deployments
+kubectl scale deployment/demo-app --replicas=10 -n rolling-updates
 
 # Verify all pods are ready
-kubectl get pods -n deployments
+kubectl get pods -n rolling-updates
 ```
 
 ### Step 3: Rolling Update to Green
@@ -83,13 +83,13 @@ Trigger rolling update by changing the image:
 
 ```bash
 # Update to green version
-kubectl set image deployment/demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:green -n deployments
+kubectl set image deployment/demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:green -n rolling-updates
 
 # Watch rollout progress (in separate terminal)
-kubectl rollout status deployment/demo-app -n deployments
+kubectl rollout status deployment/demo-app -n rolling-updates
 
 # Watch pods being replaced
-kubectl get pods -n deployments -w
+kubectl get pods -n rolling-updates -w
 
 # Check dashboard - see blue pods gradually replaced by green
 # Test: curl http://rollingupdates.127-0-0-1.nip.io:8080/color
@@ -106,16 +106,16 @@ Update to version with failing health probes to demonstrate automatic rollout pa
 
 ```bash
 # Update to red version (has broken probes)
-kubectl set image deployment/demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:red -n deployments
+kubectl set image deployment/demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:red -n rolling-updates
 
 # Watch rollout - will pause when probes fail
-kubectl rollout status deployment/demo-app -n deployments
+kubectl rollout status deployment/demo-app -n rolling-updates
 
 # Check pods - some red pods will show as NotReady
-kubectl get pods -n deployments
+kubectl get pods -n rolling-updates
 
 # Check events to see probe failures
-kubectl describe deployment/demo-app -n deployments
+kubectl describe deployment/demo-app -n rolling-updates
 ```
 
 **What's happening:**
@@ -128,20 +128,20 @@ kubectl describe deployment/demo-app -n deployments
 
 ```bash
 # Rollback to last working version (green)
-kubectl rollout undo deployment/demo-app -n deployments
+kubectl rollout undo deployment/demo-app -n rolling-updates
 
 # Watch rollback progress
-kubectl rollout status deployment/demo-app -n deployments
+kubectl rollout status deployment/demo-app -n rolling-updates
 
 # Verify all pods are green again
-kubectl get pods -n deployments
+kubectl get pods -n rolling-updates
 ```
 
 ### Step 6: Explore Rollout History
 
 ```bash
 # View all revisions
-kubectl rollout history deployment/demo-app -n deployments
+kubectl rollout history deployment/demo-app -n rolling-updates
 
 # Output example:
 # REVISION  CHANGE-CAUSE
@@ -150,7 +150,7 @@ kubectl rollout history deployment/demo-app -n deployments
 # 4         <none>
 
 # Rollback to specific revision (if needed)
-kubectl rollout undo deployment/demo-app --to-revision=2 -n deployments
+kubectl rollout undo deployment/demo-app --to-revision=2 -n rolling-updates
 ```
 
 **Key Concepts:**
@@ -169,10 +169,10 @@ Scale down to 5 replicas for clearer canary demonstration:
 
 ```bash
 # Scale down V1 deployment
-kubectl scale deployment/demo-app --replicas=5 -n deployments
+kubectl scale deployment/demo-app --replicas=5 -n rolling-updates
 
 # Verify scaling
-kubectl get pods -n deployments
+kubectl get pods -n rolling-updates
 ```
 
 ### Step 8: Deploy Canary Version (Purple)
@@ -185,9 +185,9 @@ kubectl apply -f canary/01-deployment-v2.yaml
 kubectl apply -f canary/02-service-v2.yaml
 
 # Verify both versions running
-kubectl get deployments -n deployments
-kubectl get pods -n deployments -l app=demo-app      # V1 (green) - 5 pods
-kubectl get pods -n deployments -l app=demo-app-v2   # V2 (purple) - 5 pods
+kubectl get deployments -n rolling-updates
+kubectl get pods -n rolling-updates -l app=demo-app      # V1 (green) - 5 pods
+kubectl get pods -n rolling-updates -l app=demo-app-v2   # V2 (purple) - 5 pods
 ```
 
 ### Step 9: Header-Based Canary Testing
@@ -199,7 +199,7 @@ Route specific requests to canary version using HTTP headers:
 kubectl apply -f canary/03-ingress-canary.yaml
 
 # Verify ingress
-kubectl get ingress -n deployments
+kubectl get ingress -n rolling-updates
 
 # Test normal traffic (goes to V1/green)
 curl http://rollingupdates.127-0-0-1.nip.i:8080/color
@@ -221,7 +221,7 @@ Route percentage of traffic to canary version:
 
 ```bash
 # Edit canary ingress
-kubectl edit ingress/demo-app-canary -n deployments
+kubectl edit ingress/demo-app-canary -n rolling-updates
 
 # Make these changes:
 # 1. Comment out header-based annotations:
@@ -245,19 +245,19 @@ for i in {1..20}; do curl http://rollingupdates.127-0-0-1.nip.io:8080/color; ech
 **Progressive Rollout:**
 ```bash
 # Increase to 50%
-kubectl patch ingress demo-app-canary -n deployments \
+kubectl patch ingress demo-app-canary -n rolling-updates \
   --type='json' -p='[{"op": "replace", "path": "/metadata/annotations/nginx.ingress.kubernetes.io~1canary-weight", "value": "50"}]'
 
 # Increase to 75%
-kubectl patch ingress demo-app-canary -n deployments \
+kubectl patch ingress demo-app-canary -n rolling-updates \
   --type='json' -p='[{"op": "replace", "path": "/metadata/annotations/nginx.ingress.kubernetes.io~1canary-weight", "value": "75"}]'
 
 # Complete rollout to 100% - update main ingress
-kubectl patch ingress demo-app -n deployments \
+kubectl patch ingress demo-app -n rolling-updates \
   --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/http/paths/0/backend/service/name", "value": "demo-app-v2"}]'
 
 # Remove canary ingress
-kubectl delete ingress/demo-app-canary -n deployments
+kubectl delete ingress/demo-app-canary -n rolling-updates
 ```
 
 ---
@@ -268,17 +268,17 @@ Blue/Green is demonstrated manually by switching the main ingress backend:
 
 ```bash
 # Current state: Ingress points to demo-app (green)
-kubectl get ingress/demo-app -n deployments -o yaml | grep "name: demo-app"
+kubectl get ingress/demo-app -n rolling-updates -o yaml | grep "name: demo-app"
 
 # Switch to V2 (purple) instantly
-kubectl patch ingress demo-app -n deployments \
+kubectl patch ingress demo-app -n rolling-updates \
   --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/http/paths/0/backend/service/name", "value": "demo-app-v2"}]'
 
 # All traffic instantly switches to purple
 # Check dashboard - immediate switch from green to purple
 
 # Rollback if issues (instant)
-kubectl patch ingress demo-app -n deployments \
+kubectl patch ingress demo-app -n rolling-updates \
   --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/http/paths/0/backend/service/name", "value": "demo-app"}]'
 ```
 
@@ -288,7 +288,7 @@ kubectl patch ingress demo-app -n deployments \
 
 ```bash
 # Delete all resources
-kubectl delete namespace deployments
+kubectl delete namespace rolling-updates
 
 # Or delete individually
 kubectl delete -f rolling-updates/

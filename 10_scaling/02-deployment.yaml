@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-app
+  namespace: scaling
+spec:
+  selector:
+    matchLabels:
+      app: example-app
+  template:
+    metadata:
+      labels:
+        app: example-app
+    spec:
+      containers:
+      - name: example-app
+        image: nginx
+        resources:
+          requests:
+            cpu: 5m
+            memory: 56Mi
+          limits:
+            cpu: 10m # Limit the cpu to enable scaling example -> Do not set in production
+            memory: 56Mi
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP

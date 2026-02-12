@@ -159,6 +159,12 @@ kubectl rollout undo deployment/demo-app --to-revision=2 -n rolling-updates
 - One version can have multiple revisions (e.g., blue could be revision 1 and 4)
 - `--to-revision` allows precise rollback to any previous state
 
+
+Blue (Version 1) -> Green (Version 2) -> Red (Version 3) -> "Rollback"
+
+Revision 1       ->       Revision 2  ->    Revision 3   -> "Rollback"
+                          Revision 4             <-
+
 ---
 
 ## Part 2: Canary Deployments

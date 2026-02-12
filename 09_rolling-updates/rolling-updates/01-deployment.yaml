@@ -48,7 +48,7 @@ spec:
               port: 3000
               path: /livez
 # Rolling Update Demo Commands:
-# 1. Update to green: kubectl set image deployment/demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:green -n deployments
+# 1. Update to green: kubectl set image -n rolling-updates deployments demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:green
 # 2. Watch rollout: kubectl rollout status deployment/demo-app -n deployments
 # 3. Update to red (with failing probe): kubectl set image deployment/demo-app demo-app=harbor.cloudpirates.io/training/rollouts-demo:red -n deployments
 # 4. Rollout will pause when probes fail - rollback: kubectl rollout undo deployment/demo-app -n deployments

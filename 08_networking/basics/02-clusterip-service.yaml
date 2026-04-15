@@ -1,5 +1,7 @@
 # ClusterIP Service - Internal cluster communication only (default type).
-# Accessible only from within the cluster via cluster-internal IP address.
+# Accessible only from within the cluster. While Kubernetes assigns a stable cluster-internal
+# IP address, you typically do NOT use it directly. Instead, use the internal DNS name provided
+# by the cluster dns server: <service>.<namespace>.svc.cluster.local — e.g. nginx-clusterip.networking.svc.cluster.local
 # Use case: Internal microservices communication, databases, backend services.
 apiVersion: v1
 kind: Service

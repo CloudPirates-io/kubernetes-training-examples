@@ -33,7 +33,7 @@ spec:
             # Wait before first check after startup probe succeeds
             initialDelaySeconds: 0
             # Check every X seconds
-            periodSeconds: 5
+            periodSeconds: 10
             # Mark as not ready after X failed checks
             failureThreshold: 1
             # Mark as ready after X successful checks
@@ -49,9 +49,9 @@ spec:
               port: 80
               scheme: HTTP
             # Wait before first check after startup probe succeeds
-            initialDelaySeconds: 10
+            initialDelaySeconds: 0
             # Check every X seconds
-            periodSeconds: 5
+            periodSeconds: 10
             # Restart after X consecutive failures
             failureThreshold: 1
             # Mark as healthy after X successful checks

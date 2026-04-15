@@ -1,0 +1,18 @@
+# Host-Based (Virtual Host) HTTPRoute - Routes traffic based on the request hostname.
+# Different hostnames can route to different backends on the same Gateway IP.
+# Use case: Multiple domains/subdomains on one IP (e.g., api.example.com, web.example.com).
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: host-match
+  namespace: gateway-api
+spec:
+  parentRefs:
+    - name: http
+      namespace: kgateway-system
+  hostnames:
+    - echoserver.127-0-0-1.nip.io
+  rules:
+    - backendRefs:
+        - name: echoserver
+          port: 80

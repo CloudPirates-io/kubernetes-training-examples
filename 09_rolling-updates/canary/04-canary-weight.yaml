@@ -1,0 +1,22 @@
+# Weight-Based Canary HTTPRoute - Splits traffic between V1 and V2 by percentage.
+# Routes 90% of traffic to demo-app (V1) and 10% to demo-app-v2 (canary).
+# Replaces the base demo-app HTTPRoute - increase weight to progressively roll out.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: demo-app
+  namespace: rolling-updates
+spec:
+  parentRefs:
+    - name: http
+      namespace: kgateway-system
+  hostnames:
+    - rollingupdates.127-0-0-1.nip.io
+  rules:
+    - backendRefs:
+        - name: demo-app
+          port: 3000
+          weight: 90
+        - name: demo-app-v2
+          port: 3000
+          weight: 10

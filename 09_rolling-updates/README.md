@@ -201,14 +201,14 @@ kubectl get pods -n rolling-updates -l app=demo-app-v2   # V2 (purple) - 5 pods
 Route specific requests to canary version using HTTP headers:
 
 ```bash
-# Deploy header-based canary ingress
-kubectl apply -f canary/03-ingress-canary.yaml
+# Deploy header-based canary HTTPRoute
+kubectl apply -f canary/03-header-match.yaml
 
-# Verify ingress
-kubectl get ingress -n rolling-updates
+# Verify httproutes
+kubectl get httproute -n rolling-updates
 
 # Test normal traffic (goes to V1/green)
-curl http://rollingupdates.127-0-0-1.nip.i:8080/color
+curl http://rollingupdates.127-0-0-1.nip.io:8080/color
 # Output: green
 
 # Test canary traffic (goes to V2/purple)
@@ -226,66 +226,55 @@ curl -H "x-version: 2" http://rollingupdates.127-0-0-1.nip.io:8080/color
 Route percentage of traffic to canary version:
 
 ```bash
-# Edit canary ingress
-kubectl edit ingress/demo-app-canary -n rolling-updates
+# Remove header-based canary route first
+kubectl delete httproute/demo-app-header -n rolling-updates
 
-# Make these changes:
-# 1. Comment out header-based annotations:
-#    # nginx.ingress.kubernetes.io/canary-by-header: "x-version"
-#    # nginx.ingress.kubernetes.io/canary-by-header-value: "2"
-#
-# 2. Uncomment weight annotation:
-#    nginx.ingress.kubernetes.io/canary-weight: "25"
-
-# Or apply the pre-configured file after editing
-kubectl apply -f canary/03-ingress-canary.yaml
+# Apply weight-based canary HTTPRoute (replaces base demo-app route with 90/10 split)
+kubectl apply -f canary/04-canary-weight.yaml
 
 # Test traffic distribution
 for i in {1..20}; do curl http://rollingupdates.127-0-0-1.nip.io:8080/color; echo ""; done
 
-# Output: ~25% purple, ~75% green
+# Output: ~10% purple, ~90% green
 
-# Check dashboard - see ~25% traffic to purple
+# Check dashboard - see ~10% traffic to purple
 ```
 
 **Progressive Rollout:**
 ```bash
-# Increase to 50%
-kubectl patch ingress demo-app-canary -n rolling-updates \
-  --type='json' -p='[{"op": "replace", "path": "/metadata/annotations/nginx.ingress.kubernetes.io~1canary-weight", "value": "50"}]'
+# Increase canary to 50%
+kubectl patch httproute demo-app -n rolling-updates \
+  --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/backendRefs/0/weight", "value": 50},{"op": "replace", "path": "/spec/rules/0/backendRefs/1/weight", "value": 50}]'
 
-# Increase to 75%
-kubectl patch ingress demo-app-canary -n rolling-updates \
-  --type='json' -p='[{"op": "replace", "path": "/metadata/annotations/nginx.ingress.kubernetes.io~1canary-weight", "value": "75"}]'
+# Increase canary to 75%
+kubectl patch httproute demo-app -n rolling-updates \
+  --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/backendRefs/0/weight", "value": 25},{"op": "replace", "path": "/spec/rules/0/backendRefs/1/weight", "value": 75}]'
 
-# Complete rollout to 100% - update main ingress
-kubectl patch ingress demo-app -n rolling-updates \
-  --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/http/paths/0/backend/service/name", "value": "demo-app-v2"}]'
-
-# Remove canary ingress
-kubectl delete ingress/demo-app-canary -n rolling-updates
+# Complete rollout to 100% - switch main route to V2 only
+kubectl patch httproute demo-app -n rolling-updates \
+  --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/backendRefs/0/name", "value": "demo-app-v2"},{"op": "remove", "path": "/spec/rules/0/backendRefs/1"}]'
 ```
 
 ---
 
 ## Blue/Green Deployment (Manual Demo)
 
-Blue/Green is demonstrated manually by switching the main ingress backend:
+Blue/Green is demonstrated manually by switching the main HTTPRoute backend:
 
 ```bash
-# Current state: Ingress points to demo-app (green)
-kubectl get ingress/demo-app -n rolling-updates -o yaml | grep "name: demo-app"
+# Current state: HTTPRoute points to demo-app (green)
+kubectl get httproute/demo-app -n rolling-updates -o yaml | grep "name: demo-app"
 
 # Switch to V2 (purple) instantly
-kubectl patch ingress demo-app -n rolling-updates \
-  --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/http/paths/0/backend/service/name", "value": "demo-app-v2"}]'
+kubectl patch httproute demo-app -n rolling-updates \
+  --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/backendRefs/0/name", "value": "demo-app-v2"}]'
 
 # All traffic instantly switches to purple
 # Check dashboard - immediate switch from green to purple
 
 # Rollback if issues (instant)
-kubectl patch ingress demo-app -n rolling-updates \
-  --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/http/paths/0/backend/service/name", "value": "demo-app"}]'
+kubectl patch httproute demo-app -n rolling-updates \
+  --type='json' -p='[{"op": "replace", "path": "/spec/rules/0/backendRefs/0/name", "value": "demo-app"}]'
 ```
 
 ---
@@ -304,5 +293,5 @@ kubectl delete -f canary/
 ## Additional Resources
 
 - [Kubernetes Deployments Documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
-- [NGINX Ingress Canary Annotations](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#canary)
+- [Gateway API HTTPRoute Traffic Splitting](https://gateway-api.sigs.k8s.io/guides/traffic-splitting/)
 - [Deployment Strategies Comparison](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/)

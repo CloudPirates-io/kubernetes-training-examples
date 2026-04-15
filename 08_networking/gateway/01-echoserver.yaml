@@ -1,11 +1,11 @@
-# Echo Server - Application for demonstrating Ingress routing.
+# Echo Server - Application for demonstrating Gateway API routing.
 # Returns request information including headers, method, path, and body.
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echoserver
-  namespace: ingress
+  namespace: gateway-api
 spec:
   replicas: 1
   selector:
@@ -30,7 +30,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: echoserver
-  namespace: ingress
+  namespace: gateway-api
 spec:
   type: ClusterIP
   ports:

@@ -1,0 +1,17 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: path-match
+  namespace: gateway-api
+spec:
+  parentRefs:
+    - name: http
+      namespace: kgateway-system
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix # Exact
+            value: /echoserver
+      backendRefs:
+        - name: echoserver
+          port: 80

@@ -1,0 +1,24 @@
+# Header-Based Canary HTTPRoute - Routes traffic to V2 based on HTTP header.
+# When header x-version: 2 is present, traffic goes to demo-app-v2.
+# All other traffic is unaffected (handled by the demo-app HTTPRoute).
+# Use case: Beta testing with specific users or internal teams.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: demo-app-header
+  namespace: rolling-updates
+spec:
+  parentRefs:
+    - name: http
+      namespace: kgateway-system
+  hostnames:
+    - rollingupdates.127-0-0-1.nip.io
+  rules:
+    - matches:
+        - headers:
+            - name: x-version
+              value: "2"
+              type: Exact
+      backendRefs:
+        - name: demo-app-v2
+          port: 3000

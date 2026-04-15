@@ -1,0 +1,38 @@
+# GatewayParameters - Customizes the kgateway-managed Gateway infrastructure.
+# Configures the underlying Service as NodePort so the Gateway is reachable
+# from outside the cluster without a cloud load balancer.
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: custom-gw-params
+  namespace: kgateway-system
+spec:
+  kube:
+    service:
+      type: NodePort
+      ports:
+        - port: 8080
+          nodePort: 30080
+---
+# Gateway - Entry point for all HTTP traffic into the cluster.
+# References GatewayParameters above to configure its Service as NodePort.
+# HTTPRoutes in any namespace can attach to this Gateway.
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: http
+  namespace: kgateway-system
+spec:
+  gatewayClassName: kgateway
+  infrastructure:
+    parametersRef:
+      name: custom-gw-params
+      group: gateway.kgateway.dev
+      kind: GatewayParameters
+  listeners:
+    - protocol: HTTP
+      port: 8080
+      name: http
+      allowedRoutes:
+        namespaces:
+          from: All

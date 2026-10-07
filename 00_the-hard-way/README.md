@@ -187,7 +187,7 @@ kubectl describe node
 ```
 Taints: node.kubernetes.io/not-ready:NoSchedule - remove taint:
 ```
-kubectl taint node node01 node.kubernetes.io/not-ready:NoSchedule-
+kubectl taint node kubernetes-test node.kubernetes.io/not-ready:NoSchedule-
 ```
 
 pod is creating now: `kubectl get po`

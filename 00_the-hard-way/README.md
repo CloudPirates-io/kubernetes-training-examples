@@ -74,8 +74,8 @@ Run first manifest file
 # Switch to home directory
 cd
 
-git clone https://git.cloudpirates.io/kubernetes-examples.git
-cp kubernetes-examples/00_the-hard-way/kubelet-test.yaml > /etc/kubernetes/manifests/kubelet-test.yaml
+git clone https://github.com/CloudPirates-io/kubernetes-training-examples.git
+cp kubernetes-training-examples/00_the-hard-way/kubelet-test.yaml /etc/kubernetes/manifests/kubelet-test.yaml
 ```
 
 Validate with docker ps / docker logs
@@ -168,7 +168,7 @@ kubectl apply -f kubectl-test.yaml
 ```
 
 >Instead of downloading and applying the file, you could simplify to one
->single command: kubectl apply -f https://gitlab.cloudpirates.io/cloudpirate/schulungen/examples/-/raw/main/the-hard-way/kubectl-test.yaml
+>single command: kubectl apply -f https://raw.githubusercontent.com/CloudPirates-io/kubernetes-training-examples/main/00_the-hard-way/kubectl-test.yaml
 
 Describe pod, no scheduler actions displayed
 ```

@@ -17,7 +17,17 @@ Container images should be environment-independent. Configuration is injected at
 - All keys as environment variables (`envFrom`)
 - Mounted as files via a volume (updated automatically for volumes, not for env vars)
 
-Secrets can be written with `data` (base64) or `stringData` (plain text, encoded by the API server).
+Secrets can be written with `data` (base64) or `stringData` (plain text, encoded by the API server). Inside the container the values are decoded automatically.
+
+```bash
+# Encode a value for the data field
+echo -n 'admin' | base64           # YWRtaW4=
+
+# Decode a value
+echo 'YWRtaW4=' | base64 --decode  # admin
+```
+
+Use `-n`, otherwise the trailing newline becomes part of the secret.
 
 ## PodDisruptionBudgets
 

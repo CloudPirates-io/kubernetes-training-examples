@@ -1,6 +1,16 @@
 # Kubernetes Training Examples
 
-Comprehensive hands-on examples for learning Kubernetes from basics to advanced deployment strategies. Each directory contains practical YAML manifests with detailed inline documentation.
+Hands-on examples for the CloudPirates Kubernetes introduction training. They take you from your first Pod to rolling updates, canary releases and autoscaling, and stay useful as a reference after the training.
+
+## How this repository works
+
+- **Follow the numbers.** The directories `01_` to `10_` build on each other in the order of the training. Later examples assume you know the earlier ones; for example, autoscaling in `10_scaling/` needs the Metrics Server from `05_observability/`.
+- **Read the README first.** Every directory has a README that explains the concepts and walks you through the exercise step by step.
+- **Apply files in order.** Most manifests are numbered (`00-namespace.yaml`, `01-...`, `02-...`). Apply them one by one to see what each step changes, or apply a whole (sub)directory with `kubectl apply -f <directory>/`.
+- **Read the comments.** The YAML files are commented inline, explaining what each field does and what to try next.
+- **Break things.** Some examples are meant to fail, such as exceeding a memory limit or rolling out a version with failing probes, so you can see how Kubernetes reacts.
+
+You need a Kubernetes cluster: use your managed training environment, or set up a local one as described in [Getting Started](#getting-started).
 
 ## Directory Structure
 
@@ -69,9 +79,8 @@ Comprehensive hands-on examples for learning Kubernetes from basics to advanced 
   - LoadBalancer - Cloud/on-premises load balancer integration
   - ExternalName - DNS CNAME record for external services
 - **Gateway API** - HTTP routing with kgateway (path-based and virtual host-based)
-  - Shared public Gateway (`public-gateway.yaml`) exposed via NodePort
+  - Shared public Gateway (`public-gateway.yaml`) exposed via NodePort on port 8080
   - HTTPRoutes attach to the Gateway from any namespace
-- **cert-manager** - Automatic SSL/TLS certificate management (self-signed and Let's Encrypt)
 
 ### [09_rolling-updates/](09_rolling-updates/)
 **Deployment Strategies** - Safe application updates and traffic management.
@@ -96,11 +105,22 @@ Comprehensive hands-on examples for learning Kubernetes from basics to advanced 
 ## Getting Started
 
 ### Prerequisites
-- Local Kubernetes cluster (kind, k3d, minikube, or Docker Desktop)
+- A Kubernetes cluster: either your managed training environment or a local kind cluster (see below)
 - kubectl CLI tool installed
 - Basic understanding of containers and YAML
 
+### Local Demo Cluster
+
+To run the examples locally, set up a kind cluster with our training setup: [CloudPirates-io/kind-cluster-training-setup](https://github.com/CloudPirates-io/kind-cluster-training-setup). Follow the instructions in that repository.
+
 ### Usage
+
+Clone this repository:
+
+```bash
+git clone https://github.com/CloudPirates-io/kubernetes-training-examples.git
+cd kubernetes-training-examples
+```
 
 Each directory contains ready-to-use YAML manifests. Apply them to your cluster:
 

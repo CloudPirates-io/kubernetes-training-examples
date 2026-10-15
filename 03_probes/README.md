@@ -12,12 +12,15 @@ Probes let the kubelet check the health of a container and react to it.
 
 ## Probe kinds (what happens on failure)
 
-- **Startup probe** - protects slow-starting apps; other probes are disabled until it succeeds.
+- **Startup probe** - protects slow-starting apps; liveness and readiness probes are disabled until it succeeds. Size it for the worst case: `failureThreshold * periodSeconds` must be longer than the maximum expected startup time.
 - **Readiness probe** - on failure the Pod is removed from Service endpoints, but not restarted.
 - **Liveness probe** - on failure the container is restarted.
 
 ## Best practices
 
-- Keep liveness probes cheap and independent of external dependencies.
-- Use readiness for "can I serve traffic right now?".
+- A liveness probe is not always necessary: if the app crashes itself (exit code > 0), Kubernetes restarts it anyway.
+- Always set a readiness probe. Rolling updates and rollbacks rely on it to know when new Pods are ready.
+- Implement dedicated endpoints such as `/livez` and `/readyz`, possibly on a separate port from the app.
+- Keep probes cheap, fast and independent of external dependencies.
+- Probes are not a replacement for CronJobs - don't run periodic work inside them.
 - Tune `initialDelaySeconds`, `periodSeconds`, `timeoutSeconds` and `failureThreshold` to the app.

@@ -107,7 +107,13 @@ kubectl run -it --rm curl --image=curlimages/curl --restart=Never -n networking 
   curl http://nginx-clusterip.networking.svc.cluster.local
 ```
 
-**Key point:** ClusterIP is only reachable from within the cluster. DNS name: `<service>.<namespace>.svc.cluster.local`
+**Key point:** ClusterIP is only reachable from within the cluster. Every Service gets a DNS A record:
+
+| Caller | Name to use |
+|--------|-------------|
+| Pod in the same namespace | `nginx-clusterip` |
+| Pod in another namespace | `nginx-clusterip.networking` |
+| Fully qualified (FQDN) | `nginx-clusterip.networking.svc.cluster.local` |
 
 ### Step 3: NodePort (external access without load balancer)
 

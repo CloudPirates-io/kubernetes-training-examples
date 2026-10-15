@@ -13,8 +13,10 @@ spec:
       ports:
         - port: 8080
           nodePort: 30080
+        - port: 8443
+          nodePort: 30443
 ---
-# Gateway - Entry point for all HTTP traffic into the cluster.
+# Gateway - Entry point for all HTTP and HTTPS traffic into the cluster.
 # References GatewayParameters above to configure its Service as NodePort.
 # HTTPRoutes in any namespace can attach to this Gateway.
 kind: Gateway
@@ -22,6 +24,11 @@ apiVersion: gateway.networking.k8s.io/v1
 metadata:
   name: public
   namespace: kgateway-system
+  annotations:
+    # cert-manager issues the certificate for the https listener (see cert-manager/).
+    # Self-signed works for the wildcard hostname. Let's Encrypt via HTTP-01 does not support wildcards,
+    # use letsencrypt-staging only with a concrete hostname on managed training environments.
+    cert-manager.io/cluster-issuer: selfsigned-issuer
 spec:
   gatewayClassName: kgateway
   infrastructure:
@@ -33,6 +40,16 @@ spec:
     - protocol: HTTP
       port: 8080
       name: http
+      allowedRoutes:
+        namespaces:
+          from: All
+    - protocol: HTTPS
+      port: 8443
+      name: https
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: public-tls # Secret created by cert-manager
       allowedRoutes:
         namespaces:
           from: All

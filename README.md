@@ -1,6 +1,6 @@
 # Kubernetes Training Examples
 
-Hands-on examples for the CloudPirates Kubernetes introduction training. They take you from your first Pod to rolling updates, canary releases and autoscaling, and stay useful as a reference after the training.
+Hands-on examples for the [CloudPirates Kubernetes introduction training](https://www.cloudpirates.io/solutions/training/kubernetes-introduction). They take you from your first Pod to rolling updates, canary releases and autoscaling, and stay useful as a reference after the training.
 
 ## How this repository works
 

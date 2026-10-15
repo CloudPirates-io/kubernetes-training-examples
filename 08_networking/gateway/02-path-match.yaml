@@ -5,7 +5,7 @@ metadata:
   namespace: gateway-api
 spec:
   parentRefs:
-    - name: http
+    - name: public
       namespace: kgateway-system
   rules:
     - matches:

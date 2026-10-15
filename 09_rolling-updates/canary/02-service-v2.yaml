@@ -1,5 +1,5 @@
 # Service V2 - Routes traffic to canary deployment (V2).
-# Separate service for canary ingress to target.
+# Separate service for the canary HTTPRoute to target.
 apiVersion: v1
 kind: Service
 metadata:

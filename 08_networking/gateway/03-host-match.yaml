@@ -8,9 +8,10 @@ metadata:
   namespace: gateway-api
 spec:
   parentRefs:
-    - name: http
+    - name: public
       namespace: kgateway-system
   hostnames:
+    # On managed training environments set correct hostname (echoserver.clusterXX.training.cloudpirates.io)
     - echoserver.127-0-0-1.nip.io
   rules:
     - backendRefs:

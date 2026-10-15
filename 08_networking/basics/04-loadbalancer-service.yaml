@@ -7,8 +7,6 @@ kind: Service
 metadata:
   name: nginx-loadbalancer
   namespace: networking
-  labels:
-    app: nginx
 spec:
   type: LoadBalancer
   ports:

@@ -7,8 +7,6 @@ kind: Service
 metadata:
   name: nginx-nodeport
   namespace: networking
-  labels:
-    app: nginx
 spec:
   type: NodePort
   ports:

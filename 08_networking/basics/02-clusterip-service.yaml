@@ -16,5 +16,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: nginx  # Selects pods with label app=nginx
+    app: nginx # Selects pods with label app=nginx
 # Access: Only from within cluster (e.g., curl nginx-clusterip.networking.svc.cluster.local)

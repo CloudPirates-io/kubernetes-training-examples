@@ -9,9 +9,10 @@ metadata:
   namespace: rolling-updates
 spec:
   parentRefs:
-    - name: http
+    - name: public
       namespace: kgateway-system
   hostnames:
+    # On managed training environments set correct hostname (rollingupdates.clusterXX.training.cloudpirates.io)
     - rollingupdates.127-0-0-1.nip.io
   rules:
     - matches:

@@ -9,6 +9,7 @@ Comprehensive hands-on examples for learning Kubernetes from basics to advanced 
 - Step-by-step guide for building a Kubernetes cluster manually
 - Understanding core components: etcd, API server, controller manager, scheduler, kubelet
 - Only used during the training as example files
+- See [README.md](00_the-hard-way/README.md)
 
 ### [01_basics/](01_basics/)
 **Kubernetes Fundamentals** - Core building blocks and pod patterns.
@@ -61,13 +62,15 @@ Comprehensive hands-on examples for learning Kubernetes from basics to advanced 
 - **Dynamic Provisioning** - Automatic volume provisioning with StorageClasses
 
 ### [08_networking/](08_networking/)
-**Networking and Ingress** - Service discovery and external access.
+**Networking and Gateway API** - Service discovery and external access.
 - **Service Types**
   - ClusterIP - Internal cluster communication
   - NodePort - External access via node IP and port
   - LoadBalancer - Cloud/on-premises load balancer integration
   - ExternalName - DNS CNAME record for external services
-- **Ingress** - HTTP/HTTPS routing (path-based and virtual host-based)
+- **Gateway API** - HTTP routing with kgateway (path-based and virtual host-based)
+  - Shared public Gateway (`public-gateway.yaml`) exposed via NodePort
+  - HTTPRoutes attach to the Gateway from any namespace
 - **cert-manager** - Automatic SSL/TLS certificate management (self-signed and Let's Encrypt)
 
 ### [09_rolling-updates/](09_rolling-updates/)
@@ -80,11 +83,15 @@ Comprehensive hands-on examples for learning Kubernetes from basics to advanced 
 - **Canary Deployments** - Gradual rollout with traffic splitting
   - Header-based routing (route specific users to new version)
   - Weight-based routing (percentage-based traffic split)
-  - Single ingress file with switchable strategies
+  - HTTPRoute-based traffic splitting via the Gateway API
 - Demo application with `/color` endpoint and interactive dashboard on port 8080
 
-### [10_additionals/](10_additionals/)
-**Additional Tools** - Used only for our training environments.
+### [10_scaling/](10_scaling/)
+**Autoscaling** - Scale workloads automatically based on load.
+- **HorizontalPodAutoscaler** - CPU-based scaling (1-10 replicas at 50% utilization)
+- Example Deployment and Service to scale
+- k6 load test script to generate traffic
+- Requires the Metrics Server from `05_observability/`
 
 ## Getting Started
 
@@ -122,3 +129,6 @@ Most directories follow a consistent naming pattern where **namespace = director
 - `07_storage/` → namespace: `storage`
 - `08_networking/` → namespace: `networking`
 - `09_rolling-updates/` → namespace: `rolling-updates`
+- `10_scaling/` → namespace: `scaling`
+
+Exceptions: `04_resources/qos/` uses `qos-example`, `06_config-management/pdb/` uses `pdb-examples` and `08_networking/gateway/` uses `gateway-api`.

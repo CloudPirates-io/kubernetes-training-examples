@@ -156,7 +156,7 @@ kubectl run -it --rm curl --image=curlimages/curl --restart=Never -n networking 
 ### Step 1: Deploy the Gateway
 
 ```bash
-kubectl apply -f gateway.yaml
+kubectl apply -f public-gateway.yaml
 
 # Verify the Gateway is accepted and its Service is a NodePort
 kubectl get gateway -n kgateway-system
@@ -187,11 +187,11 @@ kubectl apply -f gateway/02-path-match.yaml
 kubectl get httproute -n gateway-api
 
 # Test: request with matching path
-curl http://127.0.0.1:30080/echoserver
+curl http://127.0.0.1:8080/echoserver
 # Returns echo server response
 
 # Test: request with non-matching path
-curl http://127.0.0.1:30080/other
+curl http://127.0.0.1:8080/other
 # Returns 404 - no route matches
 ```
 
@@ -206,11 +206,11 @@ kubectl apply -f gateway/03-host-match.yaml
 kubectl get httproute -n gateway-api
 
 # Test: request with matching hostname
-curl http://echoserver.127-0-0-1.nip.io:30080/
+curl http://echoserver.127-0-0-1.nip.io:8080/
 # Returns echo server response
 
 # Test: request without matching hostname
-curl http://127.0.0.1:30080/
+curl http://127.0.0.1:8080/
 # Returns 404 - hostname does not match
 ```
 
@@ -225,7 +225,7 @@ curl http://127.0.0.1:30080/
 ```bash
 # Remove gateway examples
 kubectl delete -f gateway/
-kubectl delete -f gateway.yaml
+kubectl delete -f public-gateway.yaml
 
 # Remove service type examples
 kubectl delete namespace networking
